@@ -1,0 +1,5 @@
+com\insight\app\support\InMemoryAuthRepository.class
+com\insight\app\web\AuthControllerTest.class
+com\insight\app\web\BearerTest.class
+com\insight\app\service\AuthServiceTest.class
+com\insight\app\service\PasswordHasherTest.class

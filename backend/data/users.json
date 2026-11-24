@@ -1,0 +1,15 @@
+[ {
+  "id" : "u-demo000",
+  "email" : "demo@insight.app",
+  "name" : "Demo User",
+  "passwordHash" : "mjOmkgVM+w4MSsiP49mimQyjnJ6MNrx9TzS6rU5y8fs=",
+  "salt" : "QpFYT32oieS2rzMvyGkiCA==",
+  "createdAt" : "2026-11-17T16:43:59.995537100Z"
+}, {
+  "id" : "u-61ae3a77",
+  "email" : "test.user@example.com",
+  "name" : "Test User",
+  "passwordHash" : "Al6+DSTXbj+7iwxyRcT9C6mxZ2+pu/dZz5H5tyAn+40=",
+  "salt" : "WH5ww19dYzZhoIcCQEG3kA==",
+  "createdAt" : "2026-11-17T16:45:51.723759900Z"
+} ]

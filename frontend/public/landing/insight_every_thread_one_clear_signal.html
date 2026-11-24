@@ -1,0 +1,2687 @@
+<!DOCTYPE html>
+<html lang="en" id="top">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Insight — Every thread. One clear signal.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Three.js 0.186.0 ES-module importmap per spec -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      /* Core surfaces — exact design system tokens (no #000, no #fff except button hover text) */
+      --bg-walnut: #241c19;
+      --bg-raised-1: #2e2623;
+      --bg-raised-2: #38302e;
+      --bg-paper: #f3f0ec;
+
+      /* Typography colors */
+      --text-on-dark: #ebe8e4;
+      --text-muted-dark: #928c87;
+      --text-secondary-dark: #aca7a5;
+      --text-muted-light: #645d57;
+      --text-ink-light: #241c19;
+
+      /* Accent — signal colors (~5% surface budget) */
+      --accent-ember: #b06059;
+      --accent-oxblood: #934b44;
+      --accent-oxblood-light: #6a3632;
+
+      /* Semantic & protected product hues */
+      --semantic-success-fill: #a9c97a;
+      --semantic-success-ink: #6c8d4e;
+      --semantic-warning-sand: #d6b890;
+      --semantic-danger-red: #c46a6a;
+      --hue-blue: #8ec8e8;
+      --hue-sand: #d6b890;
+      --hue-clay: #bf816a;
+      --hue-sage: #9caf8d;
+
+      /* Hairlines */
+      --line-on-light: rgba(36, 28, 25, 0.11);
+      --line-on-dark: rgba(235, 232, 228, 0.11);
+      --line-on-dark-strong: rgba(235, 232, 228, 0.22);
+
+      /* Fonts */
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background-color: var(--bg-walnut);
+      color: var(--text-on-dark);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* Editorial Top Bar & Paper Context Section ("Library wall at night" transition) */
+    .paper-stage {
+      background-color: var(--bg-paper);
+      color: var(--text-ink-light);
+      border-bottom: 1px solid var(--line-on-light);
+      position: relative;
+      z-index: 2;
+    }
+
+    .site-nav {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 1.15rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line-on-light);
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      text-decoration: none;
+      color: var(--text-ink-light);
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      width: 18px;
+      height: 18px;
+      border: 1.25px solid var(--text-ink-light);
+      border-radius: 999px;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-mark::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border: 1.25px solid var(--accent-oxblood-light);
+      border-radius: 999px;
+    }
+
+    .nav-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .mono-tag {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      line-height: 1.2;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted-light);
+    }
+
+    .nav-jump-btn {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-ink-light);
+      background: transparent;
+      border: 1px solid rgba(36, 28, 25, 0.24);
+      border-radius: 999px;
+      padding: 0.42rem 0.85rem;
+      cursor: pointer;
+      transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+    }
+
+    .nav-jump-btn:hover,
+    .nav-jump-btn:focus-visible {
+      background-color: var(--accent-oxblood);
+      border-color: var(--accent-oxblood);
+      color: #ffffff;
+      outline: none;
+    }
+
+    /* Compact Editorial Context Strip above the Access Panel */
+    .editorial-lead {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 2rem 1.75rem 2.25rem;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
+      align-items: end;
+    }
+
+    .lead-col-main {
+      grid-column: span 7;
+    }
+
+    .lead-col-side {
+      grid-column: span 5;
+      border-left: 1px solid var(--line-on-light);
+      padding-left: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .lead-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent-oxblood-light);
+      margin-bottom: 0.65rem;
+    }
+
+    .lead-kicker-line {
+      width: 18px;
+      height: 1.5px;
+      background-color: var(--accent-oxblood-light);
+    }
+
+    .lead-heading {
+      font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+      font-weight: 600;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text-ink-light);
+      max-width: 24ch;
+    }
+
+    .lead-copy {
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: var(--text-muted-light);
+      max-width: 46ch;
+    }
+
+    /* Protected product hues: thread participants pill strip */
+    .thread-pills {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .thread-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--line-on-light);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted-light);
+      text-decoration: none;
+    }
+
+    .hue-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+    }
+
+    .hue-blue { background-color: var(--hue-blue); }
+    .hue-sand { background-color: var(--hue-sand); }
+    .hue-clay { background-color: var(--hue-clay); }
+    .hue-sage { background-color: var(--hue-sage); }
+
+    /* ==========================================================================
+       SECTION 1: ACCESS / EARLY-ACCESS PANEL (Calibrated Armillary + Form)
+       ========================================================================== */
+    .access-panel {
+      position: relative;
+      min-height: 96vh;
+      width: 100%;
+      background-color: var(--bg-walnut);
+      color: var(--text-on-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 6.5rem 1.5rem 6rem;
+      overflow: hidden;
+      isolation: isolate;
+      border-bottom: 1px solid var(--line-on-dark);
+    }
+
+    /* Subtle architectural grid lines ("library wall at night") */
+    .access-grid-lines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      max-width: 1240px;
+      margin: 0 auto;
+      border-left: 1px solid rgba(235, 232, 228, 0.045);
+      border-right: 1px solid rgba(235, 232, 228, 0.045);
+    }
+
+    .access-grid-lines::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      background-color: rgba(235, 232, 228, 0.035);
+    }
+
+    .access-top-rule {
+      position: absolute;
+      top: 1.75rem;
+      left: 1.75rem;
+      right: 1.75rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      z-index: 3;
+      font-family: var(--font-mono);
+      font-size: 0.5625rem; /* 9px */
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted-dark);
+    }
+
+    .signal-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .signal-stroke {
+      width: 22px;
+      height: 1.5px;
+      background-color: var(--accent-ember);
+      display: inline-block;
+    }
+
+    /* Orb Stage: square min(86vw, 760px) centered behind copy */
+    .orb-stage {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(86vw, 760px);
+      height: min(86vw, 760px);
+      transform: translate(-50%, -50%) scale(0.92);
+      opacity: 0.65;
+      pointer-events: none;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      will-change: transform, opacity;
+      transition: opacity 120ms linear;
+    }
+
+    /* Flat SVG fallback rings underneath — stays visible until first WebGL frame renders */
+    .orb-fallback-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 1;
+      transition: opacity 600ms ease;
+      pointer-events: none;
+    }
+
+    .orb-stage.webgl-ready .orb-fallback-svg {
+      opacity: 0;
+    }
+
+    /* WebGL Canvas: centered square, 540px display on desktop for full vernier detail */
+    .orb-canvas {
+      width: min(84vw, 540px);
+      height: min(84vw, 540px);
+      display: block;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 500ms ease;
+    }
+
+    .orb-stage.webgl-ready .orb-canvas {
+      opacity: 1;
+    }
+
+    /* Foreground Content Container */
+    .access-content {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .section-index-label {
+      font-family: var(--font-mono);
+      font-size: 0.5625rem; /* 9px */
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-secondary-dark);
+      margin-bottom: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.35rem 0.75rem;
+      background-color: rgba(46, 38, 35, 0.72);
+      border: 1px solid var(--line-on-dark);
+      border-radius: 999px;
+    }
+
+    .section-index-glyph {
+      width: 10px;
+      height: 10px;
+      border: 1.5px solid var(--accent-ember);
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    /* Large centered headline: tight leading (~0.82), slightly negative tracking */
+    .access-headline {
+      font-family: var(--font-sans);
+      font-size: clamp(3.1rem, 8.2vw, 6.25rem);
+      font-weight: 600;
+      line-height: 0.82;
+      letter-spacing: -0.042em;
+      color: var(--text-on-dark);
+      margin-bottom: 1.65rem;
+      font-kerning: normal;
+    }
+
+    .access-headline .headline-row {
+      display: block;
+    }
+
+    .access-headline .headline-row + .headline-row {
+      margin-top: 0.08em;
+    }
+
+    .access-invite {
+      font-size: clamp(0.95rem, 1.35vw, 1.125rem);
+      line-height: 1.6;
+      color: var(--text-muted-dark);
+      max-width: 44ch;
+      margin-bottom: 2.4rem;
+      font-weight: 400;
+    }
+
+    .access-invite strong {
+      color: var(--text-secondary-dark);
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       FORM & MICRO-INTERACTIONS
+       ========================================================================== */
+    .form-region {
+      width: 100%;
+      max-width: 500px;
+      min-height: 112px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .access-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .access-form[hidden] {
+      display: none !important;
+    }
+
+    /* Real visible/accessible label in tiny mono */
+    .form-label-row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.55rem;
+      padding: 0 0.5rem;
+    }
+
+    .form-label {
+      font-family: var(--font-mono);
+      font-size: 0.5625rem; /* 9px */
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-secondary-dark);
+      cursor: pointer;
+    }
+
+    .form-status-hint {
+      font-family: var(--font-mono);
+      font-size: 0.5rem; /* 8px */
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted-dark);
+    }
+
+    /* Field + Button Pill Shell */
+    .input-pill-group {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      background-color: var(--bg-raised-1);
+      border: 1px solid var(--line-on-dark-strong);
+      border-radius: 999px;
+      padding: 0.35rem 0.35rem 0.35rem 1.25rem;
+      transition:
+        border-color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1),
+        background-color 220ms ease;
+    }
+
+    /* Warm oxblood glow on focus: border rgba(174,98,90,.55) + 24px soft halo */
+    .input-pill-group:focus-within {
+      background-color: var(--bg-raised-2);
+      border-color: rgba(174, 98, 90, 0.55);
+      box-shadow:
+        0 0 0 2px rgba(174, 98, 90, 0.32),
+        0 0 24px rgba(174, 98, 90, 0.35);
+    }
+
+    .input-pill-group.has-error {
+      border-color: var(--semantic-danger-red);
+      box-shadow:
+        0 0 0 1px rgba(196, 106, 106, 0.45),
+        0 0 20px rgba(196, 106, 106, 0.22);
+    }
+
+    /* Gentle horizontal shake (300ms, ±4px) */
+    @keyframes fieldShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-4px); }
+      40% { transform: translateX(4px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(3px); }
+    }
+
+    .input-pill-group.is-shaking {
+      animation: fieldShake 300ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+
+    .email-input {
+      flex: 1;
+      min-width: 0;
+      background: transparent;
+      border: none;
+      color: var(--text-on-dark);
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      line-height: 1.4;
+      padding: 0.55rem 0.75rem 0.55rem 0;
+      outline: none;
+    }
+
+    .email-input::placeholder {
+      color: var(--text-muted-dark);
+      opacity: 0.85;
+    }
+
+    .email-input:focus-visible {
+      outline: none;
+    }
+
+    /* Request Access Button: white pill (#ebe8e4 bg, #241c19 text) -> hover oxblood #934b44 bg with #ffffff text */
+    .submit-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      background-color: var(--text-on-dark); /* #ebe8e4 */
+      color: var(--bg-walnut); /* #241c19 */
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 0.72rem 1.25rem;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      will-change: transform, background-color, color;
+      transition:
+        background-color 200ms cubic-bezier(0.22, 1, 0.36, 1),
+        color 200ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 200ms ease;
+    }
+
+    .submit-btn:hover,
+    .submit-btn:focus-visible {
+      background-color: var(--accent-oxblood); /* #934b44 (5.16:1 with #ffffff, passes AA) */
+      color: #ffffff;
+    }
+
+    .submit-btn:focus-visible {
+      outline: 2px solid var(--text-on-dark);
+      outline-offset: 2px;
+    }
+
+    .submit-btn:active {
+      background-color: var(--accent-oxblood);
+      color: #ffffff;
+    }
+
+    .btn-arrow {
+      display: inline-flex;
+      align-items: center;
+      transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .submit-btn:hover .btn-arrow,
+    .submit-btn:focus-visible .btn-arrow {
+      transform: translateX(3.5px);
+    }
+
+    /* Inline mono error below field */
+    .form-error {
+      min-height: 1.35rem;
+      margin-top: 0.55rem;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem; /* 11px for readable inline error */
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--semantic-danger-red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      opacity: 0;
+      transform: translateY(-2px);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .form-error.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .error-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background-color: var(--semantic-danger-red);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================================
+       SUCCESS CARD (Soft-green card + SVG circle 400ms & check 300ms delayed 150ms)
+       ========================================================================== */
+    .success-region {
+      width: 100%;
+    }
+
+    .success-card {
+      width: 100%;
+      background-color: var(--bg-raised-1);
+      border: 1px solid rgba(169, 201, 122, 0.38);
+      border-radius: 18px;
+      padding: 1.15rem 1.35rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      text-align: left;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+    }
+
+    .success-card[hidden] {
+      display: none !important;
+    }
+
+    .success-main {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      min-width: 0;
+    }
+
+    .success-icon-wrap {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(169, 201, 122, 0.12);
+      border-radius: 999px;
+    }
+
+    .success-svg {
+      width: 28px;
+      height: 28px;
+      overflow: visible;
+    }
+
+    /* Circle path length normalized via pathLength="100" */
+    .success-circle-path {
+      fill: none;
+      stroke: var(--semantic-success-fill);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+    }
+
+    .success-check-path {
+      fill: none;
+      stroke: var(--semantic-success-fill);
+      stroke-width: 2.25;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+    }
+
+    @keyframes drawCircle {
+      from { stroke-dashoffset: 100; }
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes drawCheck {
+      from { stroke-dashoffset: 100; }
+      to { stroke-dashoffset: 0; }
+    }
+
+    .success-card.is-animated .success-circle-path {
+      animation: drawCircle 400ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .success-card.is-animated .success-check-path {
+      animation: drawCheck 300ms cubic-bezier(0.22, 1, 0.36, 1) 150ms forwards;
+    }
+
+    .success-copy-wrap {
+      min-width: 0;
+    }
+
+    .success-tag {
+      font-family: var(--font-mono);
+      font-size: 0.5625rem; /* 9px */
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--semantic-success-fill);
+      margin-bottom: 0.2rem;
+    }
+
+    .success-message {
+      font-size: 0.92rem;
+      line-height: 1.45;
+      color: var(--text-on-dark);
+      word-break: break-word;
+    }
+
+    .success-email-highlight {
+      color: var(--semantic-success-fill);
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(169, 201, 122, 0.45);
+    }
+
+    .reset-form-btn {
+      font-family: var(--font-mono);
+      font-size: 0.5625rem; /* 9px */
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-secondary-dark);
+      background: transparent;
+      border: 1px solid var(--line-on-dark-strong);
+      border-radius: 999px;
+      padding: 0.4rem 0.7rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+    }
+
+    .reset-form-btn:hover,
+    .reset-form-btn:focus-visible {
+      background-color: var(--bg-raised-2);
+      color: var(--text-on-dark);
+      border-color: var(--text-secondary-dark);
+      outline: none;
+    }
+
+    /* ==========================================================================
+       TRUST META ROW (3 small mono labels, 6–9px, letterspaced, uppercase)
+       ========================================================================== */
+    .trust-meta-row {
+      margin-top: 1.35rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.65rem 1.15rem;
+      list-style: none;
+    }
+
+    .trust-meta-item {
+      font-family: var(--font-mono);
+      font-size: 0.5625rem; /* 9px */
+      line-height: 1.2;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted-dark);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .trust-sep {
+      width: 3px;
+      height: 3px;
+      border-radius: 999px;
+      background-color: var(--accent-ember);
+      opacity: 0.75;
+    }
+
+    /* Interactive Instrument Dock */
+    .instrument-dock {
+      position: relative;
+      z-index: 3;
+      margin-top: 2.15rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .instrument-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.42rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 0.36rem 0.72rem;
+      background-color: rgba(46, 38, 35, 0.74);
+      border: 1px solid var(--line-on-dark);
+      border-radius: 999px;
+    }
+
+    .instrument-label {
+      font-family: var(--font-mono);
+      font-size: 0.5rem; /* 8px */
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted-dark);
+      padding-right: 0.25rem;
+    }
+
+    .instrument-chip {
+      font-family: var(--font-mono);
+      font-size: 0.53rem; /* ~8.5px */
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary-dark);
+      background-color: transparent;
+      border: 1px solid rgba(235, 232, 228, 0.14);
+      border-radius: 999px;
+      padding: 0.26rem 0.62rem;
+      cursor: pointer;
+      transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+    }
+
+    .instrument-chip:hover,
+    .instrument-chip:focus-visible {
+      background-color: var(--accent-oxblood);
+      border-color: var(--accent-oxblood);
+      color: #ffffff;
+      outline: none;
+    }
+
+    .instrument-chip[aria-pressed="true"] {
+      background-color: var(--bg-raised-2);
+      border-color: var(--accent-ember);
+      color: var(--text-on-dark);
+    }
+
+    /* ==========================================================================
+       SECTION 2: SITE FOOTER (.site-footer) WITH 3D EXTRUDED "INSIGHT" WORDMARK
+       ========================================================================== */
+    .site-footer {
+      position: relative;
+      width: 100%;
+      background-color: var(--bg-walnut);
+      color: var(--text-on-dark);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* Subtle vertical editorial guide lines continuing into footer */
+    .site-footer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      max-width: 1240px;
+      margin: 0 auto;
+      border-left: 1px solid rgba(235, 232, 228, 0.045);
+      border-right: 1px solid rgba(235, 232, 228, 0.045);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .footer__top {
+      position: relative;
+      z-index: 2;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 4.5rem 1.75rem 2.75rem;
+      display: grid;
+      grid-template-columns: minmax(260px, 1.15fr) minmax(380px, 1.85fr);
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .footer__brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.15rem;
+    }
+
+    .brand.brand--footer {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      text-decoration: none;
+      color: var(--text-on-dark);
+      transition: opacity 180ms ease;
+    }
+
+    .brand.brand--footer:hover {
+      opacity: 0.88;
+    }
+
+    .brand__mark {
+      width: 30px;
+      height: 30px;
+      color: var(--text-on-dark);
+      flex-shrink: 0;
+    }
+
+    .brand__word {
+      font-family: var(--font-sans);
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text-on-dark);
+    }
+
+    .footer__brand p {
+      font-size: 0.95rem;
+      line-height: 1.58;
+      color: var(--text-muted-dark);
+      max-width: 30ch;
+    }
+
+    .arrow-link.arrow-link--light {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-top: 0.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem; /* 11px */
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-on-dark);
+      text-decoration: none;
+      padding: 0.5rem 0.9rem;
+      background-color: var(--bg-raised-1);
+      border: 1px solid var(--line-on-dark-strong);
+      border-radius: 999px;
+      transition:
+        background-color 180ms ease,
+        border-color 180ms ease,
+        color 180ms ease,
+        transform 180ms ease;
+    }
+
+    .arrow-link.arrow-link--light:hover,
+    .arrow-link.arrow-link--light:focus-visible {
+      background-color: var(--accent-oxblood);
+      border-color: var(--accent-oxblood);
+      color: #ffffff;
+      outline: none;
+    }
+
+    .arrow-link.arrow-link--light span:last-child {
+      display: inline-block;
+      transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .arrow-link.arrow-link--light:hover span:last-child,
+    .arrow-link.arrow-link--light:focus-visible span:last-child {
+      transform: translate(2px, -2px);
+    }
+
+    .footer__nav {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(120px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer__nav > div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.68rem;
+    }
+
+    .footer__nav .mono {
+      font-family: var(--font-mono);
+      font-size: 0.5625rem; /* 9px */
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted-dark);
+      margin-bottom: 0.35rem;
+    }
+
+    .footer__nav a {
+      font-size: 0.9rem;
+      color: var(--text-secondary-dark);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: color 160ms ease, transform 160ms ease;
+    }
+
+    .footer__nav a:hover,
+    .footer__nav a:focus-visible {
+      color: var(--text-on-dark);
+      transform: translateX(2px);
+      outline: none;
+    }
+
+    .footer__nav a small {
+      font-family: var(--font-mono);
+      font-size: 0.5625rem;
+      line-height: 1;
+      padding: 0.2rem 0.42rem;
+      border-radius: 999px;
+      background-color: var(--bg-raised-2);
+      border: 1px solid rgba(176, 96, 89, 0.45);
+      color: var(--text-on-dark);
+    }
+
+    /* ==========================================================================
+       3D FOOTER WORDMARK (.footer__wordmark)
+       Monumental interactive 3D architectural typography with CSS/SVG fallback
+       ========================================================================== */
+    .footer__wordmark {
+      position: relative;
+      z-index: 2;
+      max-width: 1280px;
+      margin: 0.5rem auto 0;
+      height: clamp(140px, 21vw, 275px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      user-select: none;
+      cursor: grab;
+    }
+
+    .footer__wordmark:active {
+      cursor: grabbing;
+    }
+
+    /* Subtle instrument telemetry badge for the 3D footer wordmark */
+    .wordmark-hint {
+      position: absolute;
+      top: 0.55rem;
+      right: 1.75rem;
+      z-index: 4;
+      font-family: var(--font-mono);
+      font-size: 0.5rem; /* 8px */
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted-dark);
+      pointer-events: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      opacity: 0.72;
+    }
+
+    .wordmark-hint-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background-color: var(--accent-ember);
+    }
+
+    /* CSS 3D Extruded Fallback Text (visible before WebGL frame or in fallback mode) */
+    .footer__wordmark-text {
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: clamp(4.4rem, 17.5vw, 14.5rem);
+      line-height: 0.82;
+      letter-spacing: -0.045em;
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(235, 232, 228, 0.42);
+      text-shadow: none;
+      transform: none;
+      transition: opacity 500ms ease;
+      pointer-events: none;
+    }
+
+    .footer__wordmark.webgl-wordmark-ready .footer__wordmark-text {
+      opacity: 0;
+    }
+
+    /* Interactive 3D Wordmark WebGL Canvas */
+    .footer__wordmark-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      opacity: 0;
+      transition: opacity 500ms ease;
+    }
+
+    .footer__wordmark.webgl-wordmark-ready .footer__wordmark-canvas {
+      opacity: 1;
+    }
+
+    /* Footer Bottom Legal & Status Bar */
+    .footer__bottom {
+      position: relative;
+      z-index: 2;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 1.4rem 1.75rem 2.25rem;
+      border-top: 1px solid var(--line-on-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem; /* 11px */
+      letter-spacing: 0.08em;
+      color: var(--text-muted-dark);
+    }
+
+    .footer__bottom > div {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.35rem;
+    }
+
+    .footer__bottom a {
+      color: var(--text-muted-dark);
+      text-decoration: none;
+      transition: color 160ms ease;
+    }
+
+    .footer__bottom a:hover,
+    .footer__bottom a:focus-visible {
+      color: var(--text-on-dark);
+      outline: none;
+    }
+
+    .footer__status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-secondary-dark);
+    }
+
+    .footer__status i {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background-color: var(--semantic-success-fill);
+      box-shadow: 0 0 10px rgba(169, 201, 122, 0.55);
+      display: inline-block;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 820px) {
+      .editorial-lead {
+        grid-template-columns: 1fr;
+        padding: 1.75rem 1.25rem 2rem;
+      }
+
+      .lead-col-main,
+      .lead-col-side {
+        grid-column: span 1;
+      }
+
+      .lead-col-side {
+        border-left: none;
+        border-top: 1px solid var(--line-on-light);
+        padding-left: 0;
+        padding-top: 1rem;
+      }
+
+      .access-panel {
+        padding: 5.5rem 1.15rem 5rem;
+      }
+
+      .access-top-rule {
+        left: 1.15rem;
+        right: 1.15rem;
+        top: 1.25rem;
+      }
+
+      .footer__top {
+        grid-template-columns: 1fr;
+        padding: 3.25rem 1.25rem 2rem;
+        gap: 2.25rem;
+      }
+
+      .footer__bottom {
+        padding: 1.25rem 1.25rem 2rem;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .input-pill-group {
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 20px;
+        padding: 0.75rem;
+        gap: 0.6rem;
+      }
+
+      .email-input {
+        padding: 0.45rem 0.5rem;
+        text-align: center;
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 0.8rem 1rem;
+      }
+
+      .success-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .reset-form-btn {
+        align-self: flex-end;
+      }
+
+      .orb-stage {
+        width: 94vw;
+        height: 94vw;
+      }
+
+      .orb-canvas {
+        width: 90vw;
+        height: 90vw;
+      }
+
+      .footer__nav {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    /* Reduced Motion respect */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .success-card.is-animated .success-circle-path,
+      .success-card.is-animated .success-check-path {
+        stroke-dashoffset: 0 !important;
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Anchor targets for footer links -->
+  <div id="manifesto" hidden></div>
+  <div id="product" hidden></div>
+  <div id="intelligence" hidden></div>
+  <div id="features" hidden></div>
+  <div id="trust" hidden></div>
+
+  <!-- ==========================================================================
+       SECTION 1: ACCESS / EARLY-ACCESS PANEL (#241c19 Dark Walnut)
+       Locked to Calibrated Armillary 3D Model + Tactile Form Micro-Interactions
+       ========================================================================== -->
+  <main id="access">
+    <section class="access-panel" id="access-section" aria-labelledby="access-headline">
+      <div class="access-grid-lines" aria-hidden="true"></div>
+
+      <!-- Top Instrument Metadata Rule -->
+      <div class="access-top-rule" aria-hidden="true">
+        <span>05 / Early Access Dispatch</span>
+        <span class="signal-indicator">
+          <span class="signal-stroke"></span>
+          <span id="orb-telemetry-label">Calibrated Armillary · 38° FOV · Active</span>
+        </span>
+      </div>
+
+      <!-- 3D Signal Orb + Flat SVG Rings Fallback -->
+      <div class="orb-stage" id="orb-stage" aria-hidden="true">
+        <!-- Flat SVG rings kept in markup; fades out ONLY after first good WebGL frame -->
+        <svg
+          class="orb-fallback-svg"
+          id="orb-fallback-svg"
+          viewBox="0 0 600 600"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <!-- Outer ring (+120 deg) #ebe8e4 at 45% opacity + vernier ticks -->
+          <g transform="translate(300 300) rotate(120)">
+            <ellipse cx="0" cy="0" rx="235" ry="118" stroke="#ebe8e4" stroke-opacity="0.45" stroke-width="1.5" />
+            <ellipse cx="0" cy="0" rx="242" ry="121.5" stroke="#ebe8e4" stroke-opacity="0.18" stroke-width="0.9" stroke-dasharray="2 8" />
+          </g>
+          <!-- Middle ring (-120 deg) #ebe8e4 at 50% opacity -->
+          <g transform="translate(300 300) rotate(-120)">
+            <ellipse cx="0" cy="0" rx="200" ry="100" stroke="#ebe8e4" stroke-opacity="0.50" stroke-width="1.5" />
+            <ellipse cx="0" cy="0" rx="193" ry="96.5" stroke="#ebe8e4" stroke-opacity="0.20" stroke-width="0.8" stroke-dasharray="1.5 6" />
+          </g>
+          <!-- Inner signal ring (0 deg) #b06059 at 95% opacity -->
+          <g transform="translate(300 300) rotate(0)">
+            <ellipse cx="0" cy="0" rx="170" ry="85" stroke="#b06059" stroke-opacity="0.95" stroke-width="1.9" />
+          </g>
+          <!-- Central calibrated geodesic & axial plumb line #ebe8e4 at 38% opacity -->
+          <g transform="translate(300 300)" stroke="#ebe8e4" stroke-opacity="0.38" stroke-width="1.1">
+            <line x1="0" y1="-165" x2="0" y2="165" stroke-opacity="0.24" stroke-dasharray="3 4" />
+            <polygon points="0,-96 83,-48 83,48 0,96 -83,48 -83,-48" fill="#241c19" fill-opacity="0.07" />
+            <ellipse cx="0" cy="0" rx="88" ry="34" stroke-opacity="0.3" />
+            <ellipse cx="0" cy="0" rx="34" ry="88" stroke-opacity="0.3" />
+            <polygon points="0,-54 38,0 0,54 -38,0" stroke="#b06059" stroke-opacity="0.65" />
+          </g>
+        </svg>
+
+        <!-- Transparent WebGL Canvas -->
+        <canvas class="orb-canvas" id="signal-orb-canvas" aria-hidden="true"></canvas>
+      </div>
+
+      <!-- Centered Foreground Copy + Email Form -->
+      <div class="access-content">
+        <div class="section-index-label">
+          <span class="section-index-glyph" aria-hidden="true"></span>
+          <span>Early Access · Cohort IV</span>
+        </div>
+
+        <h2 class="access-headline" id="access-headline">
+          <span class="headline-row">Every thread.</span>
+          <span class="headline-row">One clear signal.</span>
+        </h2>
+
+        <p class="access-invite">
+          Insight brings your team’s scattered conversations, decisions, and research into a <strong>calm, instrument-grade workspace</strong>. Request an invitation for your workspace below.
+        </p>
+
+        <!-- Form / Success Container -->
+        <div class="form-region">
+          <form class="access-form" id="access-form" novalidate>
+            <div class="form-label-row">
+              <label class="form-label" for="access-email">Work email address</label>
+              <span class="form-status-hint" id="typewriter-state-label">Invite Queue Open</span>
+            </div>
+
+            <div class="input-pill-group" id="input-pill-group">
+              <input
+                type="email"
+                id="access-email"
+                name="email"
+                class="email-input"
+                placeholder="you@company.com"
+                autocomplete="email"
+                spellcheck="false"
+                aria-invalid="false"
+                aria-describedby="access-email-error access-trust-list"
+                required
+              />
+              <button type="submit" class="submit-btn" id="request-access-btn">
+                <span>Request access</span>
+                <span class="btn-arrow" aria-hidden="true">
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+              </button>
+            </div>
+
+            <!-- Role=alert error container -->
+            <div class="form-error" id="access-email-error" role="alert" aria-live="assertive"></div>
+          </form>
+
+          <!-- Polite live-region for success state -->
+          <div class="success-region" aria-live="polite" aria-atomic="true">
+            <div class="success-card" id="access-success-card" hidden>
+              <div class="success-main">
+                <div class="success-icon-wrap" aria-hidden="true">
+                  <svg class="success-svg" viewBox="0 0 32 32">
+                    <circle
+                      class="success-circle-path"
+                      cx="16"
+                      cy="16"
+                      r="13"
+                      pathLength="100"
+                    />
+                    <path
+                      class="success-check-path"
+                      d="M10.5 16.5L14.2 20.2L21.8 12.2"
+                      pathLength="100"
+                    />
+                  </svg>
+                </div>
+                <div class="success-copy-wrap">
+                  <div class="success-tag">Dispatch Confirmed</div>
+                  <p class="success-message" id="success-message-text">
+                    You’re on the list — we’ll email you at <span class="success-email-highlight" id="confirmed-email-span">you@company.com</span>
+                  </p>
+                </div>
+              </div>
+              <button type="button" class="reset-form-btn" id="reset-form-btn">
+                Change email
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Small Mono Trust Labels (unchanged copy) -->
+        <ul class="trust-meta-row" id="access-trust-list" aria-label="Access terms">
+          <li class="trust-meta-item">
+            <span>No credit card</span>
+          </li>
+          <li class="trust-meta-item">
+            <span class="trust-sep" aria-hidden="true"></span>
+            <span>Onboarding in 5 min</span>
+          </li>
+          <li class="trust-meta-item">
+            <span class="trust-sep" aria-hidden="true"></span>
+            <span>Cancel anytime</span>
+          </li>
+        </ul>
+
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       SECTION 2: COMBINED SITE FOOTER WITH 3D EXTRUDED "INSIGHT" WORDMARK
+       ========================================================================== -->
+  <footer class="site-footer" id="site-footer">
+    <div class="footer__top fade-up is-inview" style="transition-delay: 130ms;">
+      <div class="footer__brand">
+        <a class="brand brand--footer" href="#top">
+          <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="1"></circle>
+            <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="0.6" stroke-dasharray="1 4.5"></circle>
+            <path d="M9.5 18c2.3-4.5 4.4-6.6 6.5-6.6s4.2 2.1 6.5 6.6" fill="none" stroke="currentColor" stroke-width="1.1"></path>
+            <circle cx="16" cy="16" r="1.6" fill="currentColor"></circle>
+          </svg>
+          <span class="brand__word">insight</span>
+        </a>
+        <p>The AI-native workspace.<br>Less noise. More signal.</p>
+        <a class="arrow-link arrow-link--light" href="#access"><span>Get early access</span><span>↗</span></a>
+      </div>
+
+      <div class="footer__nav">
+        <div><span class="mono">PRODUCT</span><a href="#product">Workspace</a><a href="#intelligence">Intelligence</a><a href="#features">Features</a><a href="#trust">Security</a></div>
+        <div><span class="mono">COMPANY</span><a href="#manifesto">Manifesto</a><a href="#access">Careers <small>3</small></a><a href="#access">Contact</a><a href="#access">Press</a></div>
+        <div><span class="mono">ELSEWHERE</span><a href="#access">X / Twitter</a><a href="#access">LinkedIn</a><a href="#access">Are.na</a><a href="#access">Status</a></div>
+      </div>
+    </div>
+
+    <!-- 3D Extruded Architectural Wordmark ("INSIGHT") -->
+    <div class="footer__wordmark" id="footer-wordmark-stage" aria-hidden="true">
+      <span class="footer__wordmark-text">INSIGHT</span>
+      <canvas class="footer__wordmark-canvas" id="footer-wordmark-canvas" aria-hidden="true"></canvas>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© 2026 Insight Labs, Inc.</span>
+      <div><a href="#access">Privacy</a><a href="#access">Terms</a><a href="#access">DPA</a></div>
+      <span>San Francisco / Earth</span>
+      <span class="footer__status"><i></i> All systems normal</span>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       1. FORM MICRO-INTERACTIONS, SCROLL & ACCESSIBILITY CONTROLLER
+       (Runs immediately & independently of WebGL/CDN availability)
+       ========================================================================== -->
+  <script>
+    window.__insightOrbBridge = {
+      focused: false,
+      impulse: 0,
+      locked: false,
+      activeModel: 'armillary',
+      onModelChange: null
+    };
+
+    (function initAccessInteractions() {
+      const accessSection = document.getElementById('access-section');
+      const orbStage = document.getElementById('orb-stage');
+
+      const form = document.getElementById('access-form');
+      const pillGroup = document.getElementById('input-pill-group');
+      const emailInput = document.getElementById('access-email');
+      const submitBtn = document.getElementById('request-access-btn');
+      const errorEl = document.getElementById('access-email-error');
+      const successCard = document.getElementById('access-success-card');
+      const confirmedEmailSpan = document.getElementById('confirmed-email-span');
+      const resetFormBtn = document.getElementById('reset-form-btn');
+
+      const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const finePointerQuery = window.matchMedia('(pointer: fine)');
+
+      let prefersReducedMotion = reducedMotionQuery.matches;
+      let hasFinePointer = finePointerQuery.matches;
+
+      reducedMotionQuery.addEventListener('change', (e) => {
+        prefersReducedMotion = e.matches;
+        if (prefersReducedMotion) {
+          stopTypewriter(true);
+          resetMagneticButton();
+        } else {
+          startTypewriterIfEligible();
+        }
+      });
+
+      finePointerQuery.addEventListener('change', (e) => {
+        hasFinePointer = e.matches;
+        if (!hasFinePointer) {
+          resetMagneticButton();
+        }
+      });
+
+
+
+      /* ------------------------------------------------------------------------
+         Placeholder Rotation (Typewriter)
+         you@company.com -> team@yourco.com -> hello@studio.work
+         70ms/char in, hold 2.2s (2200ms), 40ms delete. Pauses on focus; static under reduced motion.
+         ------------------------------------------------------------------------ */
+      const placeholders = [
+        'you@company.com',
+        'team@yourco.com',
+        'hello@studio.work'
+      ];
+      let phraseIndex = 0;
+      let charIndex = placeholders[0].length;
+      let isDeleting = false;
+      let typewriterTimer = null;
+      let isInputFocused = false;
+
+      function clearTypewriterTimer() {
+        if (typewriterTimer !== null) {
+          clearTimeout(typewriterTimer);
+          typewriterTimer = null;
+        }
+      }
+
+      function stopTypewriter(resetStatic) {
+        clearTypewriterTimer();
+        if (resetStatic) {
+          emailInput.setAttribute('placeholder', placeholders[0]);
+        }
+      }
+
+      function tickTypewriter() {
+        clearTypewriterTimer();
+        if (prefersReducedMotion || isInputFocused || emailInput.value.length > 0) {
+          return;
+        }
+
+        const currentPhrase = placeholders[phraseIndex];
+
+        if (!isDeleting) {
+          charIndex = Math.min(currentPhrase.length, charIndex + 1);
+          emailInput.setAttribute('placeholder', currentPhrase.slice(0, charIndex));
+
+          if (charIndex === currentPhrase.length) {
+            isDeleting = true;
+            typewriterTimer = setTimeout(tickTypewriter, 2200); /* hold 2.2s */
+          } else {
+            typewriterTimer = setTimeout(tickTypewriter, 70); /* 70ms/char in */
+          }
+        } else {
+          charIndex = Math.max(0, charIndex - 1);
+          emailInput.setAttribute('placeholder', currentPhrase.slice(0, charIndex) || ' ');
+
+          if (charIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % placeholders.length;
+            typewriterTimer = setTimeout(tickTypewriter, 70);
+          } else {
+            typewriterTimer = setTimeout(tickTypewriter, 40); /* 40ms delete */
+          }
+        }
+      }
+
+      function startTypewriterIfEligible() {
+        clearTypewriterTimer();
+        if (prefersReducedMotion) {
+          emailInput.setAttribute('placeholder', placeholders[0]);
+          return;
+        }
+        if (!isInputFocused && emailInput.value.length === 0 && !form.hidden) {
+          typewriterTimer = setTimeout(tickTypewriter, 1200);
+        }
+      }
+
+      emailInput.addEventListener('focus', () => {
+        isInputFocused = true;
+        window.__insightOrbBridge.focused = true;
+        clearTypewriterTimer();
+        if (emailInput.getAttribute('placeholder') === ' ') {
+          emailInput.setAttribute('placeholder', placeholders[phraseIndex]);
+        }
+      });
+
+      emailInput.addEventListener('blur', () => {
+        isInputFocused = false;
+        window.__insightOrbBridge.focused = false;
+        startTypewriterIfEligible();
+      });
+
+      emailInput.addEventListener('input', () => {
+        window.__insightOrbBridge.impulse = Math.min(1, window.__insightOrbBridge.impulse + 0.18);
+        if (emailInput.getAttribute('aria-invalid') === 'true') {
+          clearErrorState();
+        }
+      });
+
+      /* Start placeholder cycle on load (after initial 2.2s hold on you@company.com) */
+      if (!prefersReducedMotion) {
+        isDeleting = true;
+        typewriterTimer = setTimeout(tickTypewriter, 2200);
+      } else {
+        emailInput.setAttribute('placeholder', placeholders[0]);
+      }
+
+      /* ------------------------------------------------------------------------
+         Magnetic Pull on Submit Button (max 6px, fine pointer only, no reduced motion)
+         ------------------------------------------------------------------------ */
+      function resetMagneticButton() {
+        submitBtn.style.transform = 'translate3d(0px, 0px, 0px)';
+      }
+
+      submitBtn.addEventListener('pointermove', (e) => {
+        if (prefersReducedMotion || !hasFinePointer || e.pointerType === 'touch') {
+          return;
+        }
+        const rect = submitBtn.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const normX = (e.clientX - centerX) / (rect.width / 2);
+        const normY = (e.clientY - centerY) / (rect.height / 2);
+        const pullX = Math.max(-6, Math.min(6, normX * 6));
+        const pullY = Math.max(-6, Math.min(6, normY * 6));
+        submitBtn.style.transform = `translate3d(${pullX.toFixed(2)}px, ${pullY.toFixed(2)}px, 0px)`;
+      });
+
+      submitBtn.addEventListener('pointerleave', () => {
+        resetMagneticButton();
+      });
+
+      /* ------------------------------------------------------------------------
+         Email Validation, Shake Error, and Drawn Check Success State
+         ------------------------------------------------------------------------ */
+      function isValidWorkEmail(value) {
+        const trimmed = (value || '').trim();
+        if (!trimmed || trimmed.length > 254) return false;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(trimmed);
+      }
+
+      function clearErrorState() {
+        emailInput.setAttribute('aria-invalid', 'false');
+        pillGroup.classList.remove('has-error', 'is-shaking');
+        errorEl.classList.remove('is-visible');
+        errorEl.textContent = '';
+      }
+
+      function triggerErrorState(message) {
+        const msg = message || 'Please enter a valid work email';
+        window.__insightOrbBridge.impulse = Math.min(1, window.__insightOrbBridge.impulse + 0.5);
+        emailInput.setAttribute('aria-invalid', 'true');
+        pillGroup.classList.add('has-error');
+        pillGroup.classList.remove('is-shaking');
+        void pillGroup.offsetWidth;
+        pillGroup.classList.add('is-shaking');
+
+        errorEl.innerHTML = `<span class="error-dot" aria-hidden="true"></span><span>${msg}</span>`;
+        errorEl.classList.add('is-visible');
+      }
+
+      function triggerSuccessState(emailValue) {
+        clearErrorState();
+        clearTypewriterTimer();
+        resetMagneticButton();
+
+        window.__insightOrbBridge.locked = true;
+        window.__insightOrbBridge.impulse = 1.0;
+
+        confirmedEmailSpan.textContent = emailValue.trim();
+        form.hidden = true;
+        successCard.hidden = false;
+        successCard.classList.remove('is-animated');
+        void successCard.offsetWidth;
+        successCard.classList.add('is-animated');
+      }
+
+      function resetToFormState() {
+        window.__insightOrbBridge.locked = false;
+        successCard.hidden = true;
+        successCard.classList.remove('is-animated');
+        form.hidden = false;
+        clearErrorState();
+        emailInput.focus();
+      }
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const rawEmail = emailInput.value;
+        if (!isValidWorkEmail(rawEmail)) {
+          triggerErrorState('Please enter a valid work email');
+          emailInput.focus();
+          return;
+        }
+        triggerSuccessState(rawEmail);
+      });
+
+      resetFormBtn.addEventListener('click', () => {
+        resetToFormState();
+      });
+
+
+
+      /* ------------------------------------------------------------------------
+         Scroll Linked Scale (0.92 -> 1.0) & Opacity (0.65 -> 0.85)
+         ------------------------------------------------------------------------ */
+      function updateOrbScrollProgress() {
+        if (prefersReducedMotion) {
+          orbStage.style.transform = 'translate(-50%, -50%) scale(1)';
+          orbStage.style.opacity = '0.85';
+          return;
+        }
+
+        const rect = accessSection.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+
+        const rawProgress = (vh - rect.top) / (vh * 0.85);
+        const progress = Math.max(0, Math.min(1, rawProgress));
+
+        const scale = 0.92 + (1.0 - 0.92) * progress;
+        const opacity = 0.65 + (0.85 - 0.65) * progress;
+
+        orbStage.style.transform = `translate(-50%, -50%) scale(${scale.toFixed(4)})`;
+        orbStage.style.opacity = opacity.toFixed(4);
+      }
+
+      window.addEventListener('scroll', updateOrbScrollProgress, { passive: true });
+      window.addEventListener('resize', updateOrbScrollProgress, { passive: true });
+      updateOrbScrollProgress();
+    })();
+  </script>
+
+  <!-- ==========================================================================
+       2. THREE.JS DUAL-STAGE ENGINE:
+          STAGE A: CALIBRATED ARMILLARY SIGNAL ORB (Access Section)
+          STAGE B: 3D EXTRUDED ARCHITECTURAL "INSIGHT" WORDMARK (Site Footer)
+       ========================================================================== -->
+  <script type="module">
+    const orbStage = document.getElementById('orb-stage');
+    const orbCanvas = document.getElementById('signal-orb-canvas');
+    const accessSection = document.getElementById('access-section');
+    const telemetryLabel = document.getElementById('orb-telemetry-label');
+
+    const siteFooter = document.getElementById('site-footer');
+    const wordmarkStage = document.getElementById('footer-wordmark-stage');
+    const wordmarkCanvas = document.getElementById('footer-wordmark-canvas');
+
+    async function loadThreeModule() {
+      try {
+        return await import('three');
+      } catch (primaryErr) {
+        return await import('https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js');
+      }
+    }
+
+    async function initThreeScenes() {
+      let THREE;
+      try {
+        THREE = await loadThreeModule();
+      } catch (err) {
+        if (telemetryLabel) {
+          telemetryLabel.textContent = 'SVG Fallback · Offline Mode';
+        }
+        return;
+      }
+
+      /* Spec-compliant Timer (THREE.Timer connected to document) */
+      class FallbackDocumentTimer {
+        constructor() {
+          this._prev = performance.now();
+          this._elapsed = 0;
+          this._delta = 0;
+          this._hidden = false;
+          this._onVisChange = () => {
+            this._hidden = document.hidden;
+            if (!this._hidden) {
+              this._prev = performance.now();
+            }
+          };
+        }
+        connect(doc) {
+          if (doc && doc.addEventListener) {
+            doc.addEventListener('visibilitychange', this._onVisChange);
+          }
+        }
+        update(timestamp) {
+          const now = typeof timestamp === 'number' ? timestamp : performance.now();
+          if (this._hidden) {
+            this._delta = 0;
+            return;
+          }
+          this._delta = Math.min((now - this._prev) / 1000, 0.1);
+          this._prev = now;
+          this._elapsed += this._delta;
+        }
+        getDelta() {
+          return this._delta;
+        }
+        getElapsed() {
+          return this._elapsed;
+        }
+      }
+
+      const timer = typeof THREE.Timer === 'function'
+        ? new THREE.Timer()
+        : new FallbackDocumentTimer();
+
+      if (typeof timer.connect === 'function') {
+        timer.connect(document);
+      }
+
+      const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const finePointerQuery = window.matchMedia('(pointer: fine)');
+      let prefersReducedMotion = reducedMotionQuery.matches;
+      let hasFinePointer = finePointerQuery.matches;
+
+      /* ======================================================================
+         STAGE A: ACCESS SECTION — CALIBRATED ARMILLARY SIGNAL ORB
+         ====================================================================== */
+      let orbRenderer;
+      try {
+        orbRenderer = new THREE.WebGLRenderer({
+          canvas: orbCanvas,
+          alpha: true,
+          antialias: true,
+          powerPreference: 'high-performance'
+        });
+      } catch (webglErr) {
+        if (telemetryLabel) {
+          telemetryLabel.textContent = 'SVG Fallback · WebGL Unavailable';
+        }
+        return;
+      }
+
+      orbRenderer.setClearColor(0x000000, 0);
+      orbRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+      const orbScene = new THREE.Scene();
+      const orbCamera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+      orbCamera.position.set(0, 1.05, 7.0);
+      orbCamera.lookAt(0, 0, 0);
+
+      const BASE_PITCH = 0.10;
+      const orbRoot = new THREE.Group();
+      orbRoot.rotation.x = BASE_PITCH;
+      orbRoot.rotation.y = 0;
+      orbScene.add(orbRoot);
+
+      const breathingGroup = new THREE.Group();
+      orbRoot.add(breathingGroup);
+
+      function createVernierTicks(radius, tickCount, majorEvery, minorLen, majorLen, colorHex, opacity) {
+        const positions = [];
+        for (let i = 0; i < tickCount; i++) {
+          const angle = (i / tickCount) * Math.PI * 2;
+          const isMajor = i % majorEvery === 0;
+          const len = isMajor ? majorLen : minorLen;
+          const rInner = radius - len * 0.5;
+          const rOuter = radius + len * 0.5;
+          const cos = Math.cos(angle);
+          const sin = Math.sin(angle);
+          positions.push(cos * rInner, sin * rInner, 0);
+          positions.push(cos * rOuter, sin * rOuter, 0);
+        }
+        const geom = new THREE.BufferGeometry();
+        geom.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        const mat = new THREE.LineBasicMaterial({
+          color: colorHex,
+          transparent: true,
+          opacity,
+          depthWrite: false
+        });
+        return new THREE.LineSegments(geom, mat);
+      }
+
+      function createSegmentedCircle(radius, segments, dashRatio, colorHex, opacity) {
+        const positions = [];
+        for (let i = 0; i < segments; i++) {
+          const a0 = (i / segments) * Math.PI * 2;
+          const a1 = ((i + dashRatio) / segments) * Math.PI * 2;
+          positions.push(Math.cos(a0) * radius, Math.sin(a0) * radius, 0);
+          positions.push(Math.cos(a1) * radius, Math.sin(a1) * radius, 0);
+        }
+        const geom = new THREE.BufferGeometry();
+        geom.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        const mat = new THREE.LineBasicMaterial({
+          color: colorHex,
+          transparent: true,
+          opacity,
+          depthWrite: false
+        });
+        return new THREE.LineSegments(geom, mat);
+      }
+
+      function createGimbalPins(innerRadius, outerRadius, colorHex, opacity) {
+        const positions = [
+          innerRadius, 0, 0, outerRadius, 0, 0,
+          -innerRadius, 0, 0, -outerRadius, 0, 0,
+          0, innerRadius, 0, 0, outerRadius, 0,
+          0, -innerRadius, 0, 0, -outerRadius, 0
+        ];
+        const geom = new THREE.BufferGeometry();
+        geom.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        const mat = new THREE.LineBasicMaterial({
+          color: colorHex,
+          transparent: true,
+          opacity,
+          depthWrite: false
+        });
+        return new THREE.LineSegments(geom, mat);
+      }
+
+      const armillaryGroup = new THREE.Group();
+      breathingGroup.add(armillaryGroup);
+
+      const armillaryRingSpecs = [
+        {
+          radius: 2.0,
+          tube: 0.015,
+          color: 0xebe8e4,
+          opacity: 0.45,
+          azimuthY: (120 * Math.PI) / 180,
+          tiltX: 1.05,
+          periodSec: 90,
+          phase: 0.35,
+          direction: 1,
+          ticks: 72,
+          majorEvery: 6,
+          companionRadius: 2.065,
+          companionOpacity: 0.18
+        },
+        {
+          radius: 1.7,
+          tube: 0.015,
+          color: 0xebe8e4,
+          opacity: 0.50,
+          azimuthY: (-120 * Math.PI) / 180,
+          tiltX: 1.05,
+          periodSec: 75,
+          phase: 2.15,
+          direction: -1,
+          ticks: 60,
+          majorEvery: 5,
+          companionRadius: 1.64,
+          companionOpacity: 0.20
+        },
+        {
+          radius: 1.45,
+          tube: 0.018,
+          color: 0xb06059,
+          opacity: 0.95,
+          azimuthY: 0,
+          tiltX: 1.05,
+          periodSec: 105,
+          phase: 4.10,
+          direction: 1,
+          ticks: 48,
+          majorEvery: 4,
+          companionRadius: 1.39,
+          companionOpacity: 0.38
+        }
+      ];
+
+      const armillaryRings = armillaryRingSpecs.map((spec, idx) => {
+        const azimuthGroup = new THREE.Group();
+        azimuthGroup.rotation.y = spec.azimuthY;
+
+        const tiltGroup = new THREE.Group();
+        tiltGroup.rotation.x = spec.tiltX;
+        azimuthGroup.add(tiltGroup);
+
+        const spinGroup = new THREE.Group();
+        spinGroup.rotation.z = spec.phase;
+        tiltGroup.add(spinGroup);
+
+        const torusGeom = new THREE.TorusGeometry(spec.radius, spec.tube, 28, 256);
+        const torusMat = new THREE.MeshBasicMaterial({
+          color: spec.color,
+          transparent: true,
+          opacity: spec.opacity,
+          depthWrite: false
+        });
+        spinGroup.add(new THREE.Mesh(torusGeom, torusMat));
+
+        const tickColor = idx === 2 ? 0xb06059 : 0xebe8e4;
+        const tickOpacity = idx === 2 ? 0.52 : 0.28;
+        spinGroup.add(
+          createVernierTicks(spec.radius, spec.ticks, spec.majorEvery, 0.045, 0.095, tickColor, tickOpacity)
+        );
+        spinGroup.add(
+          createSegmentedCircle(spec.companionRadius, idx === 2 ? 48 : 64, 0.55, tickColor, spec.companionOpacity)
+        );
+        spinGroup.add(
+          createGimbalPins(spec.radius - 0.11, spec.radius + 0.08, tickColor, idx === 2 ? 0.65 : 0.32)
+        );
+
+        armillaryGroup.add(azimuthGroup);
+        return { spec, azimuthGroup, tiltGroup, spinGroup };
+      });
+
+      /* Harmonic Ember Signal Wave on the Inner Ring */
+      const wavePointsCount = 180;
+      const wavePositions = new Float32Array(wavePointsCount * 3);
+      const waveGeometry = new THREE.BufferGeometry();
+      waveGeometry.setAttribute('position', new THREE.BufferAttribute(wavePositions, 3));
+      const waveMaterial = new THREE.LineBasicMaterial({
+        color: 0xb06059,
+        transparent: true,
+        opacity: 0.78,
+        depthWrite: false
+      });
+      const emberWaveLine = new THREE.LineLoop(waveGeometry, waveMaterial);
+      armillaryRings[2].spinGroup.add(emberWaveLine);
+
+      function updateEmberWave(elapsed, impulse, locked) {
+        const posAttr = waveGeometry.getAttribute('position');
+        const arr = posAttr.array;
+        const baseR = 1.32;
+        const amp = locked ? 0.012 : (0.028 + impulse * 0.055);
+        for (let i = 0; i < wavePointsCount; i++) {
+          const theta = (i / wavePointsCount) * Math.PI * 2;
+          const envelope = Math.pow(Math.sin(theta * 2 - elapsed * 1.4), 2);
+          const harmonic = Math.sin(theta * 18 + elapsed * 6.0) * amp * envelope;
+          const r = baseR + harmonic;
+          arr[i * 3] = Math.cos(theta) * r;
+          arr[i * 3 + 1] = Math.sin(theta) * r;
+          arr[i * 3 + 2] = Math.cos(theta * 6 - elapsed * 2.5) * (amp * 0.7);
+        }
+        posAttr.needsUpdate = true;
+      }
+
+      /* Geodesic Core + Counter-Rotating Plumb Bob */
+      const armillaryCore = new THREE.Group();
+      armillaryGroup.add(armillaryCore);
+
+      armillaryCore.add(
+        new THREE.Mesh(
+          new THREE.IcosahedronGeometry(0.85, 2),
+          new THREE.MeshBasicMaterial({
+            color: 0x241c19,
+            transparent: true,
+            opacity: 0.07,
+            depthWrite: false
+          })
+        )
+      );
+
+      armillaryCore.add(
+        new THREE.LineSegments(
+          new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(0.85, 1)),
+          new THREE.LineBasicMaterial({
+            color: 0xebe8e4,
+            transparent: true,
+            opacity: 0.34,
+            depthWrite: false
+          })
+        )
+      );
+
+      const plumbGroup = new THREE.Group();
+      armillaryCore.add(plumbGroup);
+
+      const octaGeom = new THREE.OctahedronGeometry(0.46, 0);
+      octaGeom.scale(0.72, 1.32, 0.72);
+      plumbGroup.add(
+        new THREE.LineSegments(
+          new THREE.EdgesGeometry(octaGeom),
+          new THREE.LineBasicMaterial({
+            color: 0xb06059,
+            transparent: true,
+            opacity: 0.72,
+            depthWrite: false
+          })
+        )
+      );
+
+      const spindlePositions = new Float32Array([
+        0, -1.38, 0,  0, 1.38, 0,
+        -0.08, 1.18, 0,  0.08, 1.18, 0,
+        -0.08, -1.18, 0, 0.08, -1.18, 0
+      ]);
+      const spindleGeom = new THREE.BufferGeometry();
+      spindleGeom.setAttribute('position', new THREE.BufferAttribute(spindlePositions, 3));
+      armillaryCore.add(
+        new THREE.LineSegments(
+          spindleGeom,
+          new THREE.LineBasicMaterial({
+            color: 0xebe8e4,
+            transparent: true,
+            opacity: 0.32,
+            depthWrite: false
+          })
+        )
+      );
+
+      /* ======================================================================
+         STAGE B: FOOTER 3D EXTRUDED ARCHITECTURAL WORDMARK ("INSIGHT")
+         Procedural 3D bevel-extruded typography with wireframe CAD edges,
+         internal ember datum slice, and per-letter magnetic hover wave
+         ====================================================================== */
+      let wordmarkRenderer = null;
+      let wordmarkScene = null;
+      let wordmarkCamera = null;
+      let wordmarkRoot = null;
+      const letterAssemblies = [];
+
+      /* Helper: convert a smooth 2D centerline polyline into a closed ribbon THREE.Shape */
+      function createRibbonShapeFromCenterline(pts, halfWidth) {
+        const leftPts = [];
+        const rightPts = [];
+        const n = pts.length;
+        for (let i = 0; i < n; i++) {
+          const pPrev = pts[Math.max(0, i - 1)];
+          const pNext = pts[Math.min(n - 1, i + 1)];
+          let dx = pNext[0] - pPrev[0];
+          let dy = pNext[1] - pPrev[1];
+          const len = Math.hypot(dx, dy) || 1;
+          dx /= len;
+          dy /= len;
+          const nx = -dy;
+          const ny = dx;
+          leftPts.push(new THREE.Vector2(pts[i][0] + nx * halfWidth, pts[i][1] + ny * halfWidth));
+          rightPts.push(new THREE.Vector2(pts[i][0] - nx * halfWidth, pts[i][1] - ny * halfWidth));
+        }
+
+        const shape = new THREE.Shape();
+        shape.moveTo(leftPts[0].x, leftPts[0].y);
+        for (let i = 1; i < n; i++) {
+          shape.lineTo(leftPts[i].x, leftPts[i].y);
+        }
+        for (let i = n - 1; i >= 0; i--) {
+          shape.lineTo(rightPts[i].x, rightPts[i].y);
+        }
+        shape.closePath();
+        return shape;
+      }
+
+      /* Build exact closed THREE.Shape for each letter in I-N-S-I-G-H-T */
+      function buildInsightGlyphShapes() {
+        const H = 1.18; /* Half-height: y in [-1.18, +1.18] */
+
+        /* 1. Letter 'I' */
+        function makeI() {
+          const w = 0.22;
+          const s = new THREE.Shape();
+          s.moveTo(-w, -H);
+          s.lineTo(w, -H);
+          s.lineTo(w, H);
+          s.lineTo(-w, H);
+          s.closePath();
+          return { shape: s, width: 0.56 };
+        }
+
+        /* 2. Letter 'N' */
+        function makeN() {
+          const w = 0.84;
+          const t = 0.42;
+          const s = new THREE.Shape();
+          s.moveTo(-w, -H);
+          s.lineTo(-w, H);
+          s.lineTo(-w + t, H);
+          s.lineTo(w - t, -H + 0.72);
+          s.lineTo(w - t, H);
+          s.lineTo(w, H);
+          s.lineTo(w, -H);
+          s.lineTo(w - t, -H);
+          s.lineTo(-w + t, H - 0.72);
+          s.lineTo(-w + t, -H);
+          s.closePath();
+          return { shape: s, width: 1.78 };
+        }
+
+        /* 3. Letter 'S' (smooth cubic bezier spine thickened into a closed ribbon) */
+        function makeS() {
+          const curve1 = new THREE.CubicBezierCurve(
+            new THREE.Vector2(0.62, 0.74),
+            new THREE.Vector2(0.56, 1.15),
+            new THREE.Vector2(-0.66, 1.15),
+            new THREE.Vector2(-0.62, 0.46)
+          );
+          const curve2 = new THREE.CubicBezierCurve(
+            new THREE.Vector2(-0.62, 0.46),
+            new THREE.Vector2(-0.58, -0.02),
+            new THREE.Vector2(0.64, 0.04),
+            new THREE.Vector2(0.64, -0.50)
+          );
+          const curve3 = new THREE.CubicBezierCurve(
+            new THREE.Vector2(0.64, -0.50),
+            new THREE.Vector2(0.64, -1.14),
+            new THREE.Vector2(-0.58, -1.14),
+            new THREE.Vector2(-0.68, -0.68)
+          );
+
+          const pts = [];
+          const p1 = curve1.getPoints(28);
+          const p2 = curve2.getPoints(28).slice(1);
+          const p3 = curve3.getPoints(28).slice(1);
+          for (const p of [...p1, ...p2, ...p3]) {
+            pts.push([p.x, p.y]);
+          }
+          const s = createRibbonShapeFromCenterline(pts, 0.205);
+          return { shape: s, width: 1.74 };
+        }
+
+        /* 5. Letter 'G' (single continuous closed polygon with outer/inner C-arc + crossbar) */
+        function makeG() {
+          const rxOut = 0.88;
+          const ryOut = 1.18;
+          const rxIn = 0.46;
+          const ryIn = 0.78;
+          const startDeg = 42;
+          const endDeg = 358;
+          const steps = 64;
+
+          const s = new THREE.Shape();
+          /* Outer arc counterclockwise from 42° to 358° */
+          for (let i = 0; i <= steps; i++) {
+            const deg = startDeg + ((endDeg - startDeg) * i) / steps;
+            const rad = (deg * Math.PI) / 180;
+            const x = Math.cos(rad) * rxOut;
+            const y = Math.sin(rad) * ryOut;
+            if (i === 0) s.moveTo(x, y);
+            else s.lineTo(x, y);
+          }
+          /* Horizontal crossbar inward */
+          s.lineTo(0.05, -0.04);
+          s.lineTo(0.05, -0.40);
+          const innerStartDeg = 330;
+          s.lineTo(Math.cos((innerStartDeg * Math.PI) / 180) * rxIn, Math.sin((innerStartDeg * Math.PI) / 180) * ryIn);
+
+          /* Inner arc clockwise from 330° back to 42° */
+          for (let i = 1; i <= steps; i++) {
+            const deg = innerStartDeg - ((innerStartDeg - startDeg) * i) / steps;
+            const rad = (deg * Math.PI) / 180;
+            s.lineTo(Math.cos(rad) * rxIn, Math.sin(rad) * ryIn);
+          }
+          s.closePath();
+          return { shape: s, width: 1.84 };
+        }
+
+        /* 6. Letter 'H' */
+        function makeH() {
+          const w = 0.82;
+          const t = 0.42;
+          const bar = 0.19;
+          const s = new THREE.Shape();
+          s.moveTo(-w, -H);
+          s.lineTo(-w, H);
+          s.lineTo(-w + t, H);
+          s.lineTo(-w + t, bar);
+          s.lineTo(w - t, bar);
+          s.lineTo(w - t, H);
+          s.lineTo(w, H);
+          s.lineTo(w, -H);
+          s.lineTo(w - t, -H);
+          s.lineTo(w - t, -bar);
+          s.lineTo(-w + t, -bar);
+          s.lineTo(-w + t, -H);
+          s.closePath();
+          return { shape: s, width: 1.74 };
+        }
+
+        /* 7. Letter 'T' */
+        function makeT() {
+          const w = 0.84;
+          const stem = 0.21;
+          const topBarH = 0.40;
+          const s = new THREE.Shape();
+          s.moveTo(-w, H - topBarH);
+          s.lineTo(-w, H);
+          s.lineTo(w, H);
+          s.lineTo(w, H - topBarH);
+          s.lineTo(stem, H - topBarH);
+          s.lineTo(stem, -H);
+          s.lineTo(-stem, -H);
+          s.lineTo(-stem, H - topBarH);
+          s.closePath();
+          return { shape: s, width: 1.72 };
+        }
+
+        return [
+          { char: 'I', ...makeI() },
+          { char: 'N', ...makeN() },
+          { char: 'S', ...makeS() },
+          { char: 'I', ...makeI() },
+          { char: 'G', ...makeG() },
+          { char: 'H', ...makeH() },
+          { char: 'T', ...makeT() }
+        ];
+      }
+
+      if (wordmarkCanvas && wordmarkStage) {
+        try {
+          wordmarkRenderer = new THREE.WebGLRenderer({
+            canvas: wordmarkCanvas,
+            alpha: true,
+            antialias: true,
+            powerPreference: 'high-performance'
+          });
+          wordmarkRenderer.setClearColor(0x000000, 0);
+          wordmarkRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+          wordmarkScene = new THREE.Scene();
+          wordmarkCamera = new THREE.PerspectiveCamera(30, 4, 0.1, 100);
+          /* Camera straight-on (0, 0, Z) so the 3D text stays completely flat at rest */
+          wordmarkCamera.position.set(0, 0, 7.6);
+          wordmarkCamera.lookAt(0, 0, 0);
+
+          wordmarkRoot = new THREE.Group();
+          wordmarkRoot.rotation.set(0, 0, 0);
+          wordmarkScene.add(wordmarkRoot);
+
+          const glyphs = buildInsightGlyphShapes();
+          const kerning = 0.24;
+          const totalWidth = glyphs.reduce((acc, g) => acc + g.width, 0) + kerning * (glyphs.length - 1);
+          let cursorX = -totalWidth / 2;
+
+          /* Face & side materials matching the dark walnut / raised ink palette (no orange lines) */
+          const frontFaceMat = new THREE.MeshBasicMaterial({
+            color: 0x241c19,
+            transparent: true,
+            opacity: 0.95
+          });
+          const sideExtrudeMat = new THREE.MeshBasicMaterial({
+            color: 0x38302e,
+            transparent: true,
+            opacity: 0.85
+          });
+
+          const extrudeSettings = {
+            depth: 0.58,
+            bevelEnabled: true,
+            bevelThickness: 0.04,
+            bevelSize: 0.028,
+            bevelSegments: 2,
+            curveSegments: 24
+          };
+
+          glyphs.forEach((glyph, idx) => {
+            const centerX = cursorX + glyph.width / 2;
+            cursorX += glyph.width + kerning;
+
+            const letterPivot = new THREE.Group();
+            letterPivot.position.set(centerX, 0, 0);
+
+            const geom = new THREE.ExtrudeGeometry(glyph.shape, extrudeSettings);
+            /* Center geometry on Z so rotation happens around its mid-plane */
+            geom.translate(0, 0, -extrudeSettings.depth * 0.5);
+
+            /* 1. 3D Extruded Solid Architectural Block */
+            const solidMesh = new THREE.Mesh(geom, [frontFaceMat, sideExtrudeMat]);
+            letterPivot.add(solidMesh);
+
+            /* 2. Crisp CAD Structural Wireframe Edges (#ebe8e4) */
+            const edgeGeom = new THREE.EdgesGeometry(geom, 18);
+            const edgeMat = new THREE.LineBasicMaterial({
+              color: 0xebe8e4,
+              transparent: true,
+              opacity: 0.42
+            });
+            const edgeLines = new THREE.LineSegments(edgeGeom, edgeMat);
+            letterPivot.add(edgeLines);
+
+            wordmarkRoot.add(letterPivot);
+
+            letterAssemblies.push({
+              index: idx,
+              baseX: centerX,
+              pivot: letterPivot,
+              edgeMat,
+              hoverIntensity: 0,
+              clickImpulse: 0
+            });
+          });
+        } catch (wordmarkErr) {
+          wordmarkRenderer = null;
+        }
+      }
+
+      /* ----------------------------------------------------------------------
+         Sizing & DPR Management for Both Canvases
+         ---------------------------------------------------------------------- */
+      function resizeAllCanvases() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+        /* Stage A: Access Orb */
+        const orbRect = orbCanvas.getBoundingClientRect();
+        const orbW = Math.max(240, Math.round(orbRect.width || 540));
+        const orbH = Math.max(240, Math.round(orbRect.height || 540));
+        orbRenderer.setPixelRatio(dpr);
+        orbRenderer.setSize(orbW, orbH, false);
+        orbCamera.aspect = orbW / orbH;
+        orbCamera.updateProjectionMatrix();
+
+        /* Stage B: Footer 3D Wordmark */
+        if (wordmarkRenderer && wordmarkCanvas) {
+          const wmRect = wordmarkStage.getBoundingClientRect();
+          const wmW = Math.max(300, Math.round(wmRect.width || 1100));
+          const wmH = Math.max(120, Math.round(wmRect.height || 220));
+          wordmarkRenderer.setPixelRatio(dpr);
+          wordmarkRenderer.setSize(wmW, wmH, false);
+          wordmarkCamera.aspect = wmW / wmH;
+
+          /* Adapt camera Z distance so all 7 3D letters fit cleanly on any screen width */
+          const targetSpanWidth = 12.6;
+          const vFovRad = (wordmarkCamera.fov * Math.PI) / 180;
+          const visibleHeightAtUnitZ = 2 * Math.tan(vFovRad / 2);
+          const requiredZ = targetSpanWidth / (visibleHeightAtUnitZ * wordmarkCamera.aspect);
+          wordmarkCamera.position.z = Math.max(5.2, Math.min(18.5, requiredZ));
+          wordmarkCamera.updateProjectionMatrix();
+        }
+      }
+
+      resizeAllCanvases();
+      window.addEventListener('resize', resizeAllCanvases, { passive: true });
+
+      /* ----------------------------------------------------------------------
+         Mouse Parallax & Per-Letter 3D Hover Interaction
+         ---------------------------------------------------------------------- */
+      let targetYaw = 0;
+      let targetPitch = BASE_PITCH;
+
+      accessSection.addEventListener('pointermove', (e) => {
+        if (prefersReducedMotion || !hasFinePointer || e.pointerType === 'touch') {
+          return;
+        }
+        const rect = accessSection.getBoundingClientRect();
+        const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+
+        targetYaw = THREE.MathUtils.clamp(nx, -1, 1) * 0.20;
+        targetPitch = BASE_PITCH + THREE.MathUtils.clamp(ny, -1, 1) * 0.14;
+      }, { passive: true });
+
+      accessSection.addEventListener('pointerleave', () => {
+        targetYaw = 0;
+        targetPitch = BASE_PITCH;
+      }, { passive: true });
+
+      /* Footer 3D Wordmark Pointer Tracking */
+      let wmPointerActive = false;
+      let wmNormX = 0;
+      let wmNormY = 0;
+
+      if (siteFooter && wordmarkStage) {
+        siteFooter.addEventListener('pointermove', (e) => {
+          if (prefersReducedMotion || e.pointerType === 'touch') return;
+          const rect = wordmarkStage.getBoundingClientRect();
+          wmNormX = THREE.MathUtils.clamp(((e.clientX - rect.left) / rect.width) * 2 - 1, -1.2, 1.2);
+          wmNormY = THREE.MathUtils.clamp(((e.clientY - rect.top) / rect.height) * 2 - 1, -1.2, 1.2);
+          wmPointerActive = true;
+        }, { passive: true });
+
+        siteFooter.addEventListener('pointerleave', () => {
+          wmPointerActive = false;
+        }, { passive: true });
+
+        /* Clicking the 3D wordmark sends a mechanical wave impulse across I-N-S-I-G-H-T */
+        wordmarkStage.addEventListener('click', () => {
+          if (prefersReducedMotion) return;
+          letterAssemblies.forEach((item, i) => {
+            setTimeout(() => {
+              item.clickImpulse = 1.0;
+            }, i * 55);
+          });
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         IntersectionObserver (threshold 0.02) for Section Visibility
+         ---------------------------------------------------------------------- */
+      let isAccessVisible = true;
+      let isFooterVisible = true;
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.target === accessSection) {
+                isAccessVisible = entry.isIntersecting && entry.intersectionRatio >= 0.02;
+              } else if (entry.target === siteFooter) {
+                isFooterVisible = entry.isIntersecting && entry.intersectionRatio >= 0.02;
+              }
+            }
+          },
+          { threshold: [0, 0.02, 0.1] }
+        );
+        observer.observe(accessSection);
+        if (siteFooter) observer.observe(siteFooter);
+      }
+
+      /* ----------------------------------------------------------------------
+         First Frame Ready Flags
+         ---------------------------------------------------------------------- */
+      let firstOrbFrame = false;
+      let firstWordmarkFrame = false;
+
+      function markOrbReady() {
+        if (!firstOrbFrame) {
+          firstOrbFrame = true;
+          window.__signalOrbWebGLReady = true;
+          if (!orbStage.classList.contains('force-svg-fallback')) {
+            orbStage.classList.add('webgl-ready');
+          }
+        }
+      }
+
+      function markWordmarkReady() {
+        if (!firstWordmarkFrame && wordmarkStage) {
+          firstWordmarkFrame = true;
+          window.__footerWordmarkWebGLReady = true;
+          if (!orbStage.classList.contains('force-svg-fallback')) {
+            wordmarkStage.classList.add('webgl-wordmark-ready');
+          }
+        }
+      }
+
+      function renderStaticFrames() {
+        updateEmberWave(0, 0, false);
+        orbRoot.rotation.x = BASE_PITCH;
+        orbRoot.rotation.y = 0;
+        orbRenderer.render(orbScene, orbCamera);
+        markOrbReady();
+
+        if (wordmarkRenderer && wordmarkScene && wordmarkCamera) {
+          wordmarkRoot.rotation.set(0, 0, 0);
+          wordmarkRenderer.render(wordmarkScene, wordmarkCamera);
+          markWordmarkReady();
+        }
+      }
+
+      if (prefersReducedMotion) {
+        renderStaticFrames();
+      }
+
+      reducedMotionQuery.addEventListener('change', (e) => {
+        prefersReducedMotion = e.matches;
+        if (prefersReducedMotion) {
+          orbRenderer.setAnimationLoop(null);
+          renderStaticFrames();
+        } else {
+          orbRenderer.setAnimationLoop(animate);
+        }
+      });
+
+      finePointerQuery.addEventListener('change', (e) => {
+        hasFinePointer = e.matches;
+        if (!hasFinePointer) {
+          targetYaw = 0;
+          targetPitch = BASE_PITCH;
+          wmPointerActive = false;
+        }
+      });
+
+      /* ----------------------------------------------------------------------
+         Unified Animation Loop via renderer.setAnimationLoop + THREE.Timer
+         ---------------------------------------------------------------------- */
+      function animate(timestamp) {
+        if (prefersReducedMotion || document.hidden) {
+          return;
+        }
+
+        timer.update(timestamp);
+        const delta = Math.min(timer.getDelta(), 0.1);
+        const elapsed = timer.getElapsed();
+
+        /* 1. Render Stage A (Calibrated Armillary Orb) when visible */
+        if (isAccessVisible) {
+          const bridge = window.__insightOrbBridge || { focused: false, impulse: 0, locked: false };
+          bridge.impulse = THREE.MathUtils.damp(bridge.impulse || 0, 0, 3.2, delta);
+          const focusTighten = bridge.focused ? 0.92 : 1.0;
+
+          for (const entry of armillaryRings) {
+            const angularSpeed = (2 * Math.PI) / entry.spec.periodSec;
+            const speedBoost = 1 + bridge.impulse * 2.4;
+            entry.spinGroup.rotation.z += delta * angularSpeed * entry.spec.direction * speedBoost;
+
+            const desiredTilt = entry.spec.tiltX * focusTighten + Math.sin(elapsed * angularSpeed * 2 + entry.spec.phase) * 0.035;
+            entry.tiltGroup.rotation.x = THREE.MathUtils.damp(entry.tiltGroup.rotation.x, desiredTilt, 4, delta);
+          }
+
+          updateEmberWave(elapsed, bridge.impulse, bridge.locked);
+
+          armillaryCore.rotation.y = elapsed * ((2 * Math.PI) / 84);
+          armillaryCore.rotation.x = Math.sin(elapsed * 0.35) * 0.06;
+          plumbGroup.rotation.y = -elapsed * ((2 * Math.PI) / 42);
+          breathingGroup.position.y = Math.sin(elapsed * 0.75) * 0.04;
+
+          orbRoot.rotation.y = THREE.MathUtils.damp(orbRoot.rotation.y, targetYaw, 4, delta);
+          orbRoot.rotation.x = THREE.MathUtils.damp(orbRoot.rotation.x, targetPitch, 4, delta);
+
+          orbRenderer.render(orbScene, orbCamera);
+          markOrbReady();
+        }
+
+        /* 2. Render Stage B (Footer 3D Extruded "INSIGHT" Wordmark) when visible */
+        if (isFooterVisible && wordmarkRenderer && wordmarkScene && wordmarkCamera) {
+          /* Stay completely flat (0, 0) at rest; tilt in 3D only when pointer interacts */
+          const desiredWmYaw = wmPointerActive ? wmNormX * 0.18 : 0;
+          const desiredWmPitch = wmPointerActive ? wmNormY * 0.16 : 0;
+
+          wordmarkRoot.rotation.y = THREE.MathUtils.damp(wordmarkRoot.rotation.y, desiredWmYaw, 5.0, delta);
+          wordmarkRoot.rotation.x = THREE.MathUtils.damp(wordmarkRoot.rotation.x, desiredWmPitch, 5.0, delta);
+
+          /* Per-letter 3D elevation & rotation only on hover/click; flat (0,0,0) at rest */
+          const pointerWorldX = wmNormX * 5.6;
+          for (const item of letterAssemblies) {
+            item.clickImpulse = THREE.MathUtils.damp(item.clickImpulse, 0, 5.0, delta);
+
+            const dist = Math.abs(item.baseX - pointerWorldX);
+            const proximity = wmPointerActive ? Math.max(0, 1 - dist / 2.2) : 0;
+            item.hoverIntensity = THREE.MathUtils.damp(item.hoverIntensity, proximity, 6.0, delta);
+
+            const targetZ = item.hoverIntensity * 0.45 + item.clickImpulse * 0.55;
+            const targetY = item.hoverIntensity * 0.08 + item.clickImpulse * 0.12;
+            const targetRotY = (item.hoverIntensity * 0.26 * (pointerWorldX > item.baseX ? 1 : -1)) + item.clickImpulse * 0.35;
+            const targetRotX = -item.hoverIntensity * 0.18;
+
+            item.pivot.position.z = THREE.MathUtils.damp(item.pivot.position.z, targetZ, 6.0, delta);
+            item.pivot.position.y = THREE.MathUtils.damp(item.pivot.position.y, targetY, 6.0, delta);
+            item.pivot.rotation.y = THREE.MathUtils.damp(item.pivot.rotation.y, targetRotY, 6.0, delta);
+            item.pivot.rotation.x = THREE.MathUtils.damp(item.pivot.rotation.x, targetRotX, 6.0, delta);
+
+            /* Brighten the letter's warm off-white wireframe on proximity/click */
+            const activeGlow = Math.min(1, item.hoverIntensity + item.clickImpulse);
+            item.edgeMat.opacity = 0.38 + activeGlow * 0.50;
+          }
+
+          wordmarkRenderer.render(wordmarkScene, wordmarkCamera);
+          markWordmarkReady();
+        }
+      }
+
+      if (!prefersReducedMotion) {
+        orbRenderer.setAnimationLoop(animate);
+      }
+    }
+
+    initThreeScenes();
+  </script>
+</body>
+</html>

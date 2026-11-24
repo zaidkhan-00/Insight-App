@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en" data-variant="soft">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#241c19" />
+  <meta name="description" content="Insight is the AI-native workspace that turns noisy team conversations into decisions, context, and momentum. Less scrolling. More signal." />
+  <meta property="og:title" content="Insight — Every thread. One clear signal." />
+  <meta property="og:description" content="The AI-native workspace for teams that would rather build than scroll." />
+  <meta property="og:type" content="website" />
+  <title>Insight — Every thread. One clear signal.</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preload" href="assets/fonts/instrument-sans-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/instrument-sans-500.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/general-sans-500.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/ibm-plex-sans-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="page-loader" id="pageLoader" aria-hidden="true">
+    <div class="loader__brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="0.7" stroke-dasharray="1 5"/>
+        <path d="M9.5 18c2.3-4.5 4.4-6.6 6.5-6.6s4.2 2.1 6.5 6.6" fill="none" stroke="#b06059" stroke-width="1.2"/>
+        <circle cx="16" cy="16" r="1.7" fill="currentColor"/>
+      </svg>
+      <span>insight</span>
+    </div>
+    <div class="loader__progress"><span></span></div>
+    <div class="loader__meta"><span>CALIBRATING SIGNAL</span><span>001</span></div>
+  </div>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="site-header" id="siteHeader">
+    <a class="brand" href="#top" aria-label="Insight home">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="1"/>
+        <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="0.6" stroke-dasharray="1 4.5"/>
+        <path d="M9.5 18c2.3-4.5 4.4-6.6 6.5-6.6s4.2 2.1 6.5 6.6" fill="none" stroke="currentColor" stroke-width="1.1"/>
+        <circle cx="16" cy="16" r="1.6" fill="currentColor"/>
+      </svg>
+      <span class="brand__word">insight</span>
+      <sup>®</sup>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="#product">Product</a>
+      <a href="#intelligence">Intelligence</a>
+      <a href="#manifesto">Manifesto</a>
+      <a href="#trust">Security</a>
+    </nav>
+
+    <div class="header__actions">
+      <a class="header__signin" href="/" aria-label="Sign in to the Insight app">Sign in</a>
+      <a class="button button--small" href="#access">
+        <span>Get early access</span>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span>
+        <span class="sr-only">Open menu</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Site menu" aria-hidden="true">
+    <div class="mobile-menu__inner">
+      <span class="eyebrow"><i></i> NAVIGATION</span>
+      <nav aria-label="Mobile navigation">
+        <a href="#product"><span>01</span> Product</a>
+        <a href="#intelligence"><span>02</span> Intelligence</a>
+        <a href="#manifesto"><span>03</span> Manifesto</a>
+        <a href="#trust"><span>04</span> Security</a>
+      </nav>
+      <a class="button button--light" href="#access"><span>Get early access</span><span>↗</span></a>
+      <div class="mobile-menu__foot">
+        <span>San Francisco / 2026</span>
+        <span>Private beta</span>
+      </div>
+    </div>
+  </div>
+
+  <main id="main">
+    <section class="hero" id="top" data-nav="dark">
+      <div class="hero__grid">
+        <div class="hero__copy">
+          <div class="eyebrow hero__eyebrow reveal"><i></i> AI-NATIVE TEAM MESSAGING <span>EST. 2026</span></div>
+          <h1 class="hero__title">
+            <span class="hero__line reveal">Every thread.</span>
+            <span class="hero__line reveal">One clear</span>
+            <span class="hero__line hero__line--serif reveal">signal.</span>
+          </h1>
+          <p class="hero__sub reveal">
+            Insight is the AI-native workspace that reads the room for you.
+            Catch up on the noise, catch every decision, and get back to the work.
+          </p>
+          <div class="hero__actions reveal">
+            <a class="button button--primary magnetic" href="#access">
+              <span>Join the private beta</span>
+              <span class="button__arrow"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span>
+            </a>
+            <a class="text-link" href="#product">
+              <span class="text-link__play"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 4 5 4-5 4V4Z" fill="currentColor"/></svg></span>
+              <span>See how it thinks</span>
+            </a>
+          </div>
+          <div class="hero__proof reveal">
+            <div class="avatar-stack" aria-hidden="true">
+              <span class="avatar avatar--sand">MC</span>
+              <span class="avatar avatar--clay">JB</span>
+              <span class="avatar avatar--sage">PN</span>
+              <span class="avatar avatar--blue">LO</span>
+              <span class="avatar avatar--paper">+</span>
+            </div>
+            <p>Built for teams of 10–10,000<br /><span>who think out loud.</span></p>
+          </div>
+        </div>
+
+        <div class="hero__visual reveal">
+          <div class="core" id="coreStage">
+            <canvas id="signalCanvas" aria-label="An abstract visualization of conversations being synthesized into one insight."></canvas>
+            <div class="core__ring core__ring--outer" aria-hidden="true"></div>
+            <div class="core__ring core__ring--inner" aria-hidden="true"></div>
+
+            <div class="core-label core-label--tl">
+              <span class="status-dot"></span>
+              <span>CONTEXT ENGINE</span>
+              <b>LIVE</b>
+            </div>
+            <div class="core-label core-label--tr">
+              <span>NODE / 014</span>
+              <span>35.6762° N</span>
+            </div>
+            <div class="core-readout" aria-hidden="true">
+              <span>1,284</span>
+              <small>MESSAGES<br />SYNTHESIZED</small>
+            </div>
+
+            <div class="signal-card">
+              <div class="signal-card__head">
+                <span class="signal-card__badge">
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5 9.4 6l4.6 1.4L9.4 9 8 13.5 6.6 9 2 7.4 6.6 6 8 1.5Z" fill="currentColor"/></svg>
+                  THREAD INTELLIGENCE
+                </span>
+                <span class="mono">JUST NOW</span>
+              </div>
+              <div class="signal-card__channel"><span>#</span> product-launch</div>
+              <p class="signal-card__title">Three decisions. One blocker.</p>
+              <p class="signal-card__copy">Onboarding ships Tuesday behind a flag. Legal copy is the only open risk.</p>
+              <div class="signal-card__meta">
+                <span><i class="dot dot--red"></i> 1 blocker</span>
+                <span><i class="dot dot--green"></i> 3 decisions</span>
+                <span>8 messages</span>
+              </div>
+              <div class="signal-card__foot">
+                <div class="mini-avatars"><span>PN</span><span>LO</span><span>SR</span></div>
+                <span class="mono">READ BRIEF →</span>
+              </div>
+            </div>
+
+            <div class="core-card core-card--right">
+              <span class="mono">SIGNAL QUALITY</span>
+              <strong>94.7<small>%</small></strong>
+              <div class="signal-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+          </div>
+          <div class="visual-meta">
+            <span class="mono">SYS / INSIGHT-01</span>
+            <span class="mono">AI-READY WORKSPACE</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__footer">
+        <a class="scroll-cue" href="#intelligence">
+          <span>Scroll to find the signal</span>
+          <span class="scroll-cue__line"><i></i></span>
+        </a>
+        <div class="hero__coordinates mono">
+          <span>37.7749° N</span>
+          <span>122.4194° W</span>
+          <span>09:41 PST</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>CATCH UP</span><i>✦</i><span>DECIDE FASTER</span><i>✦</i><span>REMEMBER EVERYTHING</span><i>✦</i><span>PROTECT ATTENTION</span><i>✦</i><span>MOVE WORK FORWARD</span>
+      </div>
+    </div>
+
+    <section class="shift" id="intelligence" data-nav="auto">
+      <div class="shift__sticky" id="shiftSticky">
+        <div class="shift__bg" id="shiftBg" aria-hidden="true"></div>
+        <div class="shift__grid" id="shiftGrid">
+          <div class="shift__copy">
+            <div class="eyebrow shift__eyebrow"><i></i> 01 / THE SHIFT</div>
+            <div class="shift__titles">
+              <h2 class="shift__title shift__title--noise" id="shiftTitleNoise">
+                Too much<br /><em>context.</em>
+              </h2>
+              <h2 class="shift__title shift__title--signal" id="shiftTitleSignal">
+                One clear<br /><em>signal.</em>
+              </h2>
+            </div>
+            <p class="shift__desc" id="shiftDesc">
+              The average team spends 4.1 hours a week reconstructing conversations.
+              Insight reads every thread, maps every decision, and hands you the short version.
+            </p>
+            <div class="shift__stats" id="shiftStats">
+              <div class="shift-stat shift-stat--noise">
+                <span class="shift-stat__value">4.1<small>hrs</small></span>
+                <span class="shift-stat__label">lost per person,<br />every week</span>
+              </div>
+              <div class="shift-stat shift-stat--signal">
+                <span class="shift-stat__value">12<small>sec</small></span>
+                <span class="shift-stat__label">to understand<br />the whole room</span>
+              </div>
+            </div>
+            <div class="shift__hint mono" id="shiftHint"><span></span> KEEP SCROLLING</div>
+          </div>
+
+          <div class="shift__visual">
+            <div class="stack" id="messageStack">
+              <div class="stack__line stack__line--h" aria-hidden="true"></div>
+              <div class="stack__line stack__line--v" aria-hidden="true"></div>
+
+              <article class="stack-card stack-card--1">
+                <div class="stack-card__head"><span class="avatar avatar--sand">MC</span><b>Maya Chen</b><time>10:42</time></div>
+                <p>The onboarding animation still feels like a checkout. Can we make it feel more like handing off a project?</p>
+                <span class="stack-card__tag">#design</span>
+              </article>
+
+              <article class="stack-card stack-card--2">
+                <div class="stack-card__head"><span class="avatar avatar--clay">JB</span><b>Jon Bell</b><time>10:46</time></div>
+                <p>Yes. I'll drop the progress bar and let the workspace reveal itself step by step.</p>
+                <span class="stack-card__tag">#design</span>
+              </article>
+
+              <article class="stack-card stack-card--3">
+                <div class="stack-card__head"><span class="avatar avatar--sage">PN</span><b>Priya Nair</b><time>10:51</time></div>
+                <p><mark>Decision:</mark> ship the new flow behind a flag Tuesday. I'll own rollout.</p>
+                <span class="stack-card__tag">#product-launch</span>
+              </article>
+
+              <article class="stack-card stack-card--4">
+                <div class="stack-card__head"><span class="avatar avatar--blue">LO</span><b>Liam Osei</b><time>10:58</time></div>
+                <p><mark class="mark--red">Blocker:</mark> legal hasn't approved the new consent copy. Needs to land by Friday.</p>
+                <span class="stack-card__tag">#legal-review</span>
+              </article>
+
+              <article class="stack-card stack-card--5">
+                <div class="stack-card__head"><span class="avatar avatar--paper">SR</span><b>Sofia Reyes</b><time>11:02</time></div>
+                <p>I'll draft it today and drop it in #legal-review. Can someone tag Dana for a quick read?</p>
+                <span class="stack-card__tag">#legal-review</span>
+              </article>
+
+              <div class="stack-labels" aria-hidden="true">
+                <span class="stack-label stack-label--1"><i></i> THREADS / 08</span>
+                <span class="stack-label stack-label--2"><i></i> DECISIONS / 03</span>
+                <span class="stack-label stack-label--3"><i></i> BLOCKERS / 01</span>
+                <span class="stack-label stack-label--4"><i></i> OWNERS / 04</span>
+              </div>
+
+              <article class="stack-ai" id="stackAi">
+                <div class="stack-ai__top">
+                  <span class="stack-ai__badge">
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5 9.4 6l4.6 1.4L9.4 9 8 13.5 6.6 9 2 7.4 6.6 6 8 1.5Z" fill="currentColor"/></svg>
+                    INSIGHT / THREAD SYNTHESIS
+                  </span>
+                  <span class="mono">00:00:12</span>
+                </div>
+                <h3>Three decisions.<br />One blocker.</h3>
+                <p>The team is shipping the onboarding flow behind a flag Tuesday. The design is settled; legal copy is the only item at risk.</p>
+                <div class="stack-ai__rows">
+                  <div><span class="dot dot--green"></span><b>DECISION</b><span>Ship behind a flag Tuesday</span><em>PN</em></div>
+                  <div><span class="dot dot--red"></span><b>BLOCKER</b><span>Consent copy by Friday</span><em>LO</em></div>
+                  <div><span class="dot dot--paper"></span><b>NEXT</b><span>Sofia drafts, Dana reviews</span><em>SR</em></div>
+                </div>
+                <div class="stack-ai__foot">
+                  <div class="mini-avatars"><span>PN</span><span>LO</span><span>SR</span></div>
+                  <span class="mono">8 MESSAGES → 12 SEC READ</span>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div class="shift__coords mono" aria-hidden="true">
+          <span>INSIGHT ENGINE / ACTIVE</span>
+          <span id="shiftPercent">000</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="product" id="product" data-nav="light">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow"><i></i> 02 / THE PRODUCT</div>
+          <h2 class="section-title">Ask your workspace<br /><em>what actually happened.</em></h2>
+        </div>
+        <div class="section-head__aside">
+          <p>Every conversation becomes searchable context. Ask in plain language, get an answer with the receipts.</p>
+          <a class="arrow-link" href="#access"><span>Try the live brief</span><span>↗</span></a>
+        </div>
+      </div>
+
+      <div class="app-window" id="appWindow">
+        <div class="app-bar">
+          <div class="app-bar__left">
+            <div class="traffic"><i></i><i></i><i></i></div>
+            <span class="mono">INSIGHT / ORBIT LABS</span>
+          </div>
+          <div class="app-bar__center mono"># PRODUCT-LAUNCH</div>
+          <div class="app-bar__right">
+            <span class="app-bar__status"><i></i> AI ACTIVE</span>
+            <span class="app-bar__kbd mono">⌘ K</span>
+          </div>
+        </div>
+
+        <div class="app-body">
+          <aside class="app-side" aria-label="Workspace channels">
+            <div class="workspace">
+              <span class="workspace__logo">O</span>
+              <div><b>Orbit Labs</b><small>24 members</small></div>
+              <span class="workspace__chev">⌄</span>
+            </div>
+            <div class="side-search"><span>⌕</span> Search <kbd>⌘K</kbd></div>
+            <div class="side-group">
+              <span class="side-label">CHANNELS <b>+</b></span>
+              <a class="active" href="#product" tabindex="-1"><span>#</span> product-launch <i>4</i></a>
+              <a href="#product" tabindex="-1"><span>#</span> design-crit</a>
+              <a href="#product" tabindex="-1"><span>#</span> engineering</a>
+              <a href="#product" tabindex="-1"><span>#</span> legal-review</a>
+              <a href="#product" tabindex="-1"><span>#</span> general</a>
+            </div>
+            <div class="side-group">
+              <span class="side-label">DIRECT MESSAGES</span>
+              <a href="#product" tabindex="-1"><span class="presence presence--on">●</span> Priya Nair</a>
+              <a href="#product" tabindex="-1"><span class="presence">●</span> Jon Bell</a>
+              <a href="#product" tabindex="-1"><span class="presence presence--on">●</span> Sofia Reyes</a>
+            </div>
+            <div class="side-insight">
+              <span class="side-insight__icon">✦</span>
+              <p><b>3 unread signals</b><br />Insight found 1 blocker in #legal-review.</p>
+              <button type="button">Review</button>
+            </div>
+            <div class="side-user">
+              <span class="avatar avatar--sand">MC</span>
+              <div><b>Maya Chen</b><small>Design lead</small></div>
+              <span class="side-user__more">•••</span>
+            </div>
+          </aside>
+
+          <section class="app-chat" aria-label="Conversation preview">
+            <div class="chat-head">
+              <div>
+                <h3><span>#</span> product-launch</h3>
+                <p>Launch war room · 24 members</p>
+              </div>
+              <div class="chat-head__actions"><span>◎</span><span>⋮</span></div>
+            </div>
+
+            <div class="chat-scroll">
+              <div class="chat-date"><span>Today, October 28</span></div>
+
+              <article class="msg" data-id="m1">
+                <span class="avatar avatar--sand">MC</span>
+                <div class="msg__body">
+                  <div class="msg__head"><b>Maya Chen</b><time>10:42 AM</time></div>
+                  <p>The onboarding animation still feels like a checkout. Can we make it feel more like handing off a project?</p>
+                  <div class="msg__reactions"><span>✦ 2</span><span>Add reaction</span></div>
+                </div>
+              </article>
+
+              <article class="msg" data-id="m2">
+                <span class="avatar avatar--clay">JB</span>
+                <div class="msg__body">
+                  <div class="msg__head"><b>Jon Bell</b><time>10:46 AM</time></div>
+                  <p>Yes. I'll drop the progress bar and let the workspace reveal itself step by step.</p>
+                </div>
+              </article>
+
+              <article class="msg" data-id="m3">
+                <span class="avatar avatar--sage">PN</span>
+                <div class="msg__body">
+                  <div class="msg__head"><b>Priya Nair</b><time>10:51 AM</time><span class="msg__ai">✦ captured a decision</span></div>
+                  <p><b>Decision:</b> ship the new flow behind a flag Tuesday. I'll own rollout. <span class="msg__mention">@jon</span> can you prep the fallback?</p>
+                  <div class="msg__reactions"><span>✓ 4</span><span>🔥 2</span><span>Add reaction</span></div>
+                </div>
+              </article>
+
+              <article class="msg" data-id="m4">
+                <span class="avatar avatar--sand">MC</span>
+                <div class="msg__body">
+                  <div class="msg__head"><b>Maya Chen</b><time>10:55 AM</time></div>
+                  <p>Love it. The empty state copy needs one more pass before we lock.</p>
+                </div>
+              </article>
+
+              <article class="msg" data-id="m5">
+                <span class="avatar avatar--blue">LO</span>
+                <div class="msg__body">
+                  <div class="msg__head"><b>Liam Osei</b><time>10:58 AM</time><span class="msg__risk">! blocker detected</span></div>
+                  <p><b>Blocker:</b> legal hasn't approved the new consent copy yet. Needs to land by Friday.</p>
+                </div>
+              </article>
+
+              <article class="msg" data-id="m6">
+                <span class="avatar avatar--paper">SR</span>
+                <div class="msg__body">
+                  <div class="msg__head"><b>Sofia Reyes</b><time>11:02 AM</time></div>
+                  <p>I'll draft it today and drop it in <span class="msg__mention">#legal-review</span>. Can someone tag Dana for a quick read?</p>
+                  <div class="msg__reactions"><span>✓ 1</span><span>Add reaction</span></div>
+                </div>
+              </article>
+
+              <article class="msg" data-id="m7">
+                <span class="avatar avatar--clay">JB</span>
+                <div class="msg__body">
+                  <div class="msg__head"><b>Jon Bell</b><time>11:04 AM</time></div>
+                  <p>Done. Also — should we include the sample workspace in the invite?</p>
+                </div>
+              </article>
+
+              <article class="msg" data-id="m8">
+                <span class="avatar avatar--sage">PN</span>
+                <div class="msg__body">
+                  <div class="msg__head"><b>Priya Nair</b><time>11:06 AM</time></div>
+                  <p>Open question: do we invite existing teams or start with new signups? Let's decide async by EOD.</p>
+                </div>
+              </article>
+
+              <div class="typing"><span class="avatar avatar--paper">SR</span><span class="typing__text">Sofia is typing</span><span class="typing__dots"><i></i><i></i><i></i></span></div>
+            </div>
+
+            <div class="composer">
+              <div class="composer__input"><span>Message #product-launch</span><span class="composer__actions">⌁ &nbsp; ☺ &nbsp; @</span></div>
+              <button type="button" class="composer__send" aria-label="Send message">↑</button>
+            </div>
+          </section>
+
+          <aside class="insight-pane" aria-label="Insight AI assistant">
+            <div class="insight-pane__head">
+              <div class="insight-brand">
+                <span class="insight-brand__spark">✦</span>
+                <div><span>INSIGHT</span><small>AI WORKSPACE</small></div>
+              </div>
+              <span class="insight-pane__live"><i></i> LIVE</span>
+            </div>
+
+            <div class="insight-scope">
+              <span class="mono">SCOPE</span>
+              <span class="insight-scope__pill"><span>#</span> product-launch <b>×</b></span>
+            </div>
+
+            <div class="ai-prompts" role="group" aria-label="Ask Insight about this conversation">
+              <button class="ai-chip is-active" type="button" data-prompt="catchup">Catch me up</button>
+              <button class="ai-chip" type="button" data-prompt="decisions">Decisions</button>
+              <button class="ai-chip" type="button" data-prompt="blockers">Blockers</button>
+              <button class="ai-chip" type="button" data-prompt="open">Open questions</button>
+            </div>
+
+            <div class="ai-output" id="aiOutput" aria-live="polite">
+              <div class="ai-output__loading" aria-hidden="true">
+                <span></span><span></span><span></span>
+                <p>Reading 8 messages…</p>
+              </div>
+              <div class="ai-output__content">
+                <div class="ai-output__top">
+                  <span class="ai-output__label"><i>✦</i> <span id="aiKicker">CATCH-UP / 8 MESSAGES</span></span>
+                  <span class="mono" id="aiTime">JUST NOW</span>
+                </div>
+                <h3 id="aiTitle">Three decisions. One blocker.</h3>
+                <p class="ai-output__summary" id="aiSummary">The team is shipping the new onboarding flow behind a flag on Tuesday. The design is settled; legal copy is the only item still at risk.</p>
+                <div class="ai-output__items" id="aiItems"></div>
+                <div class="ai-output__sources">
+                  <span class="mono">SOURCES</span>
+                  <div id="aiSources"></div>
+                </div>
+                <div class="ai-output__footer">
+                  <span class="ai-confidence"><i></i> High confidence</span>
+                  <button type="button" class="ai-copy" id="copyBrief"><span>Copy brief</span> ⧉</button>
+                </div>
+                <div class="ai-related">
+                  <span class="mono">RELATED THREADS</span>
+                  <div><span>#legal-review</span><b>Consent copy review</b><em>2 msgs ↗</em></div>
+                  <div><span>#design-crit</span><b>The handoff metaphor</b><em>3 msgs ↗</em></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-ask">
+              <span>✦</span>
+              <input type="text" id="aiAskInput" placeholder="Ask anything about this room…" aria-label="Ask Insight about this conversation" />
+              <button type="button" id="aiAskButton" aria-label="Ask">↑</button>
+            </div>
+            <div class="ai-disclaimer">Insight can make mistakes. Every answer is linked to its source.</div>
+          </aside>
+        </div>
+      </div>
+
+      <div class="product-foot">
+        <span class="mono">HOVER THE BRIEF. CLICK A SOURCE TO SEE THE RECEIPT.</span>
+        <span class="mono">LIVE PRODUCT PREVIEW / 2026</span>
+      </div>
+    </section>
+
+    <section class="features" id="features" data-nav="light">
+      <div class="features__top">
+        <div class="eyebrow"><i></i> 03 / THE SYSTEM</div>
+        <h2 class="section-title">Built to hold<br /><em>the whole conversation.</em></h2>
+        <p class="features__intro">Not another AI bolted onto chat. Insight is a workspace with memory, judgment, and a point of view.</p>
+      </div>
+
+      <div class="bento">
+        <article class="bento-card bento-card--wide bento-card--cream">
+          <div class="bento-copy">
+            <span class="bento-index mono">01 / RECALL</span>
+            <h3>Catch up at the<br />speed of thought.</h3>
+            <p>Insight distills a day of conversation into a 12-second read — decisions, owners, risks, and what deserves your attention.</p>
+          </div>
+          <div class="bento-visual bento-visual--speed">
+            <div class="speed-ring">
+              <svg viewBox="0 0 220 220" aria-hidden="true">
+                <circle cx="110" cy="110" r="92" fill="none" stroke="currentColor" stroke-opacity=".12" stroke-width="1"/>
+                <circle cx="110" cy="110" r="74" fill="none" stroke="currentColor" stroke-opacity=".2" stroke-width="1" stroke-dasharray="2 7"/>
+                <circle cx="110" cy="110" r="58" fill="none" stroke="#b06059" stroke-width="1.5" stroke-dasharray="210 155" stroke-linecap="round" transform="rotate(-90 110 110)"/>
+                <g class="speed-ticks"></g>
+              </svg>
+              <div class="speed-value"><strong>12</strong><span>SEC</span></div>
+            </div>
+            <div class="speed-compare"><span>OLD WAY</span><b>47m 12s</b><i></i><span>INSIGHT</span><b>12s</b></div>
+          </div>
+        </article>
+
+        <article class="bento-card bento-card--receipts">
+          <div class="bento-copy">
+            <span class="bento-index mono">02 / TRUST</span>
+            <h3>Answers with<br />receipts.</h3>
+            <p>Every claim links back to the exact message, file, or decision. No black-box guessing.</p>
+          </div>
+          <div class="receipt-demo">
+            <div class="receipt-demo__q">What did we decide about the launch date?</div>
+            <div class="receipt-demo__a">
+              <span class="receipt-demo__spark">✦</span>
+              <p>Ship Tuesday behind a feature flag. Priya owns the rollout.</p>
+              <div class="receipt-demo__src"><span>PN</span><span>10:51 AM</span><b>1 source ↗</b></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="bento-card bento-card--dark bento-card--decisions">
+          <div class="bento-copy">
+            <span class="bento-index mono">03 / MEMORY</span>
+            <h3>Decisions, not<br />diaries.</h3>
+            <p>Your workspace keeps a living record of what was decided, by whom, and why.</p>
+          </div>
+          <div class="decision-list">
+            <div><span class="check">✓</span><p>Ship onboarding behind a flag<small>Tue · Priya Nair</small></p><span class="mono">D-048</span></div>
+            <div><span class="check">✓</span><p>Cut the progress bar<small>Mon · Jon Bell</small></p><span class="mono">D-047</span></div>
+            <div><span class="check check--open">!</span><p>Invite strategy<small>Open · due EOD</small></p><span class="mono">Q-012</span></div>
+          </div>
+        </article>
+
+        <article class="bento-card bento-card--quiet">
+          <div class="bento-copy">
+            <span class="bento-index mono">04 / ATTENTION</span>
+            <h3>Quiet by default.</h3>
+            <p>Insight interrupts you only when something actually needs you. Everything else waits in a brief.</p>
+          </div>
+          <div class="quiet-demo">
+            <div class="quiet-demo__top"><span class="mono">MENTIONS TODAY</span><span class="mono">FILTERED</span></div>
+            <div class="quiet-bars" aria-hidden="true">
+              <i style="--h:20%"></i><i style="--h:42%"></i><i style="--h:74%"></i><i style="--h:88%"></i><i style="--h:34%"></i><i style="--h:28%"></i><i style="--h:11%"></i><i style="--h:67%"></i><i style="--h:53%"></i><i style="--h:22%"></i><i style="--h:8%"></i><i style="--h:14%"></i>
+            </div>
+            <div class="quiet-demo__foot"><span><i></i> 2 need you</span><span>11 muted</span></div>
+          </div>
+        </article>
+
+        <article class="bento-card bento-card--search">
+          <div class="bento-copy">
+            <span class="bento-index mono">05 / SEARCH</span>
+            <h3>The whole team's<br />memory. Searchable.</h3>
+            <p>Ask “why did we drop the progress bar?” and get the answer, the thread, and the context.</p>
+          </div>
+          <div class="search-demo">
+            <div class="search-demo__bar"><span>⌕</span><p>why did we drop the progress bar?</p><kbd>↵</kbd></div>
+            <div class="search-demo__result">
+              <div class="search-demo__avatars"><span class="avatar avatar--sand">MC</span><span class="avatar avatar--clay">JB</span></div>
+              <p>Because the flow felt like a checkout. The team decided a progressive reveal better matched the product's “handoff” metaphor.</p>
+              <div class="search-demo__meta"><span>Thread · #design-crit</span><span>3 messages ↗</span></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="manifesto" id="manifesto" data-nav="dark">
+      <div class="manifesto__inner">
+        <div class="eyebrow"><i></i> THE INSIGHT PRINCIPLE</div>
+        <blockquote>
+          “The best AI doesn't answer more questions.<br />
+          It gives you back your <em>attention.</em>”
+        </blockquote>
+        <div class="manifesto__foot">
+          <p>We believe software should make teams feel more present, not more monitored. Insight is built around one idea: technology should absorb the noise, so people can do the thinking.</p>
+          <div class="manifesto__seal">
+            <svg viewBox="0 0 88 88" aria-hidden="true">
+              <circle cx="44" cy="44" r="42" fill="none" stroke="currentColor" stroke-opacity=".25"/>
+              <circle cx="44" cy="44" r="33" fill="none" stroke="currentColor" stroke-opacity=".2" stroke-dasharray="1 5"/>
+              <path d="M28 48c5-9 10-14 16-14s11 5 16 14" fill="none" stroke="#b06059" stroke-width="1.2"/>
+              <circle cx="44" cy="44" r="3" fill="#b06059"/>
+            </svg>
+            <span class="mono">INSIGHT<br />SF / 2026</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust" id="trust" data-nav="light">
+      <div class="trust__grid">
+        <div class="trust__visual">
+          <div class="trust-orbit" id="trustOrbit" aria-hidden="true">
+            <svg class="trust-orbit__fallback" viewBox="0 0 520 520">
+              <circle class="orbit-ring orbit-ring--1" cx="260" cy="260" r="238" fill="none" stroke="currentColor" stroke-opacity=".18" stroke-width="1"/>
+              <circle class="orbit-ring orbit-ring--2" cx="260" cy="260" r="206" fill="none" stroke="currentColor" stroke-opacity=".25" stroke-width="1" stroke-dasharray="2 6"/>
+              <circle class="orbit-ring orbit-ring--3" cx="260" cy="260" r="168" fill="none" stroke="currentColor" stroke-opacity=".18" stroke-width="1"/>
+              <circle cx="260" cy="260" r="118" fill="none" stroke="currentColor" stroke-opacity=".12" stroke-width="12"/>
+              <path d="M260 188v144M222 224v72a38 38 0 0 0 76 0v-72" fill="none" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="212" y="208" width="96" height="82" rx="16" fill="none" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M260 240v24" stroke="#b06059" stroke-width="2"/>
+              <circle cx="260" cy="274" r="5" fill="#b06059"/>
+              <g class="orbit-ticks"></g>
+            </svg>
+            <canvas id="trustCanvas" class="trust-orbit__canvas" aria-hidden="true"></canvas>
+          </div>
+        </div>
+
+        <div class="trust__copy">
+          <div class="eyebrow"><i></i> 04 / TRUST</div>
+          <h2 class="section-title">Your words<br />stay <em>yours.</em></h2>
+          <p class="trust__intro">Insight needs context to be useful. It doesn't need to own your conversations. Your data is encrypted, isolated, and never used to train shared models.</p>
+          <div class="trust-list">
+            <div><span class="mono">01</span><div><b>Never trained on.</b><p>Your messages, files, and insights are excluded from model training by default.</p></div></div>
+            <div><span class="mono">02</span><div><b>Private by design.</b><p>Workspace-level isolation, AES-256 at rest, TLS 1.3 in transit.</p></div></div>
+            <div><span class="mono">03</span><div><b>Enterprise control.</b><p>SSO, SCIM, retention policies, and granular permissions from day one.</p></div></div>
+          </div>
+          <a class="arrow-link" href="#access"><span>Read the security overview</span><span>↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="access" data-nav="dark">
+      <div class="access-panel" id="access-section" aria-labelledby="access-headline">
+        <div class="access-grid-lines" aria-hidden="true"></div>
+        <div class="access-top-rule" aria-hidden="true">
+          <span>05 / Early Access Dispatch</span>
+          <span class="signal-indicator">
+            <span class="signal-stroke"></span>
+            <span id="orb-telemetry-label">Calibrated Armillary · 38° FOV · Active</span>
+          </span>
+        </div>
+        <div class="orb-stage" id="orb-stage" aria-hidden="true">
+          <svg class="orb-fallback-svg" id="orb-fallback-svg" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <g transform="translate(300 300) rotate(120)">
+              <ellipse cx="0" cy="0" rx="235" ry="118" stroke="#ebe8e4" stroke-opacity="0.45" stroke-width="1.5" />
+              <ellipse cx="0" cy="0" rx="242" ry="121.5" stroke="#ebe8e4" stroke-opacity="0.18" stroke-width="0.9" stroke-dasharray="2 8" />
+            </g>
+            <g transform="translate(300 300) rotate(-120)">
+              <ellipse cx="0" cy="0" rx="200" ry="100" stroke="#ebe8e4" stroke-opacity="0.50" stroke-width="1.5" />
+              <ellipse cx="0" cy="0" rx="193" ry="96.5" stroke="#ebe8e4" stroke-opacity="0.20" stroke-width="0.8" stroke-dasharray="1.5 6" />
+            </g>
+            <g transform="translate(300 300) rotate(0)">
+              <ellipse cx="0" cy="0" rx="170" ry="85" stroke="#b06059" stroke-opacity="0.95" stroke-width="1.9" />
+            </g>
+            <g transform="translate(300 300)" stroke="#ebe8e4" stroke-opacity="0.38" stroke-width="1.1">
+              <line x1="0" y1="-165" x2="0" y2="165" stroke-opacity="0.24" stroke-dasharray="3 4" />
+              <polygon points="0,-96 83,-48 83,48 0,96 -83,48 -83,-48" fill="#241c19" fill-opacity="0.07" />
+              <ellipse cx="0" cy="0" rx="88" ry="34" stroke-opacity="0.3" />
+              <ellipse cx="0" cy="0" rx="34" ry="88" stroke-opacity="0.3" />
+              <polygon points="0,-54 38,0 0,54 -38,0" stroke="#b06059" stroke-opacity="0.65" />
+            </g>
+          </svg>
+          <canvas class="orb-canvas" id="signal-orb-canvas" aria-hidden="true"></canvas>
+        </div>
+        <div class="access-content">
+          <div class="section-index-label">
+            <span class="section-index-glyph" aria-hidden="true"></span>
+            <span>Early Access · Cohort IV</span>
+          </div>
+          <h2 class="access-headline" id="access-headline">
+            <span class="headline-row">Every thread.</span>
+            <span class="headline-row">One clear signal.</span>
+          </h2>
+          <p class="access-invite">
+            Insight brings your team’s scattered conversations, decisions, and research into a <strong>calm, instrument-grade workspace</strong>. Request an invitation for your workspace below.
+          </p>
+          <div class="form-region">
+            <form class="access-form" id="access-form" novalidate>
+              <div class="form-label-row">
+                <label class="form-label" for="access-email">Work email address</label>
+                <span class="form-status-hint" id="typewriter-state-label">Invite Queue Open</span>
+              </div>
+              <div class="input-pill-group" id="input-pill-group">
+                <input type="email" id="access-email" name="email" class="email-input" placeholder="you@company.com" autocomplete="email" spellcheck="false" aria-invalid="false" aria-describedby="access-email-error access-trust-list" required />
+                <button type="submit" class="submit-btn" id="request-access-btn">
+                  <span>Request access</span>
+                  <span class="btn-arrow" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+              <div class="form-error" id="access-email-error" role="alert" aria-live="assertive"></div>
+            </form>
+            <div class="success-region" aria-live="polite" aria-atomic="true">
+              <div class="success-card" id="access-success-card" hidden>
+                <div class="success-main">
+                  <div class="success-icon-wrap" aria-hidden="true">
+                    <svg class="success-svg" viewBox="0 0 32 32">
+                      <circle class="success-circle-path" cx="16" cy="16" r="13" pathLength="100" />
+                      <path class="success-check-path" d="M10.5 16.5L14.2 20.2L21.8 12.2" pathLength="100" />
+                    </svg>
+                  </div>
+                  <div class="success-copy-wrap">
+                    <div class="success-tag">Dispatch Confirmed</div>
+                    <p class="success-message" id="success-message-text">
+                      You’re on the list — we’ll email you at <span class="success-email-highlight" id="confirmed-email-span">you@company.com</span>
+                    </p>
+                  </div>
+                </div>
+                <button type="button" class="reset-form-btn" id="reset-form-btn">
+                  Change email
+                </button>
+              </div>
+            </div>
+          </div>
+          <ul class="trust-meta-row" id="access-trust-list" aria-label="Access terms">
+            <li class="trust-meta-item"><span>No credit card</span></li>
+            <li class="trust-meta-item"><span class="trust-sep" aria-hidden="true"></span><span>Onboarding in 5 min</span></li>
+            <li class="trust-meta-item"><span class="trust-sep" aria-hidden="true"></span><span>Cancel anytime</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="site-footer">
+    <div class="footer__top fade-up is-inview" style="transition-delay: 130ms;">
+      <div class="footer__brand">
+        <a class="brand brand--footer" href="#top">
+          <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="1"></circle>
+            <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="0.6" stroke-dasharray="1 4.5"></circle>
+            <path d="M9.5 18c2.3-4.5 4.4-6.6 6.5-6.6s4.2 2.1 6.5 6.6" fill="none" stroke="currentColor" stroke-width="1.1"></path>
+            <circle cx="16" cy="16" r="1.6" fill="currentColor"></circle>
+          </svg>
+          <span class="brand__word">insight</span>
+        </a>
+        <p>The AI-native workspace.<br>Less noise. More signal.</p>
+        <a class="arrow-link arrow-link--light" href="#access"><span>Get early access</span><span>↗</span></a>
+      </div>
+
+      <div class="footer__nav">
+        <div><span class="mono">PRODUCT</span><a href="#product">Workspace</a><a href="#intelligence">Intelligence</a><a href="#features">Features</a><a href="#trust">Security</a></div>
+        <div><span class="mono">COMPANY</span><a href="#manifesto">Manifesto</a><a href="#access">Careers <small>3</small></a><a href="#access">Contact</a><a href="#access">Press</a></div>
+        <div><span class="mono">ELSEWHERE</span><a href="#access">X / Twitter</a><a href="#access">LinkedIn</a><a href="#access">Are.na</a><a href="#access">Status</a></div>
+      </div>
+    </div>
+
+    <div class="footer__wordmark" id="footer-wordmark-stage" aria-hidden="true">
+      <span class="footer__wordmark-text">INSIGHT</span>
+      <canvas class="footer__wordmark-canvas" id="footer-wordmark-canvas" aria-hidden="true"></canvas>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© 2026 Insight Labs, Inc.</span>
+      <div><a href="#access">Privacy</a><a href="#access">Terms</a><a href="#access">DPA</a></div>
+      <span>San Francisco / Earth</span>
+      <span class="footer__status"><i></i> All systems normal</span>
+    </div>
+  </footer>
+
+  <div class="scroll-meter" id="scrollMeter" aria-hidden="true">
+    <span class="scroll-meter__index" id="meterIndex">01</span>
+    <div class="scroll-meter__rail"><i id="meterFill"></i></div>
+    <span class="scroll-meter__label" id="meterLabel">SIGNAL</span>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/access-cta.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module" src="assets/js/trust-3d.js"></script>
+  <script type="module" src="assets/js/access-footer-3d.js"></script>
+  </body>
+</html>

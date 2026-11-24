@@ -1,0 +1,103 @@
+[ {
+  "id" : "m-0011",
+  "threadId" : "t-001",
+  "author" : "Maya",
+  "body" : "Enterprise account asked if usage-based billing is on the roadmap.",
+  "createdAt" : "2026-11-17T14:19:26.841230400Z"
+}, {
+  "id" : "m-0012",
+  "threadId" : "t-001",
+  "author" : "Devon",
+  "body" : "Third customer this week. People want pay-per-signal, not seats.",
+  "createdAt" : "2026-11-17T14:48:26.841230400Z"
+}, {
+  "id" : "m-0013",
+  "threadId" : "t-001",
+  "author" : "Priya",
+  "body" : "Support inbox: two more asking to be flagged when pricing changes ship.",
+  "createdAt" : "2026-11-17T15:20:26.841230400Z"
+}, {
+  "id" : "m-0014",
+  "threadId" : "t-001",
+  "author" : "Maya",
+  "body" : "This is now the loudest thread in the workspace. Escalating to the launch brief.",
+  "createdAt" : "2026-11-17T16:02:26.841230400Z"
+}, {
+  "id" : "m-0021",
+  "threadId" : "t-002",
+  "author" : "Sam",
+  "body" : "Call with Northwind went well. Champion is enthusiastic.",
+  "createdAt" : "2026-11-17T09:24:26.841230400Z"
+}, {
+  "id" : "m-0022",
+  "threadId" : "t-002",
+  "author" : "Sam",
+  "body" : "Blocker: they need SSO before their security review will pass.",
+  "createdAt" : "2026-11-17T10:24:26.841230400Z"
+}, {
+  "id" : "m-0031",
+  "threadId" : "t-003",
+  "author" : "Ana",
+  "body" : "PR up. Replaced the 30s polling loop with a websocket stream.",
+  "createdAt" : "2026-11-17T14:24:26.841230400Z"
+}, {
+  "id" : "m-0032",
+  "threadId" : "t-003",
+  "author" : "Jonas",
+  "body" : "Reconnect logic handles flaky mobile networks now — added 3 integration tests.",
+  "createdAt" : "2026-11-17T15:04:26.841230400Z"
+}, {
+  "id" : "m-0033",
+  "threadId" : "t-003",
+  "author" : "Ana",
+  "body" : "All green. Ready for review — this removes the last source of stale signals.",
+  "createdAt" : "2026-11-17T15:29:26.841230400Z"
+}, {
+  "id" : "m-0041",
+  "threadId" : "t-004",
+  "author" : "Riley",
+  "body" : "Bug report: muted threads still inflate the daily digest score.",
+  "createdAt" : "2026-11-17T06:24:26.841230400Z"
+}, {
+  "id" : "m-0042",
+  "threadId" : "t-004",
+  "author" : "Riley",
+  "body" : "Fix merged: the scorer now skips threads flagged muted at scan time.",
+  "createdAt" : "2026-11-17T07:24:26.841230400Z"
+}, {
+  "id" : "m-0051",
+  "threadId" : "t-005",
+  "author" : "Alex",
+  "body" : "v4 drafted. Launch window confirmed with marketing.",
+  "createdAt" : "2026-11-17T14:54:26.841230400Z"
+}, {
+  "id" : "m-0052",
+  "threadId" : "t-005",
+  "author" : "Jordan",
+  "body" : "Open question remains: do we bundle the signal digest with the team plan?",
+  "createdAt" : "2026-11-17T15:39:26.841230400Z"
+}, {
+  "id" : "m-0053",
+  "threadId" : "t-005",
+  "author" : "Alex",
+  "body" : "Decision needed by Friday — this is the last unknown before the brief is final.",
+  "createdAt" : "2026-11-17T15:56:26.841230400Z"
+}, {
+  "id" : "m-0061",
+  "threadId" : "t-006",
+  "author" : "Priya",
+  "body" : "RFC started. Should commit bursts decay faster than chat volume?",
+  "createdAt" : "2026-11-14T16:24:26.841230400Z"
+}, {
+  "id" : "m-0062",
+  "threadId" : "t-006",
+  "author" : "Devon",
+  "body" : "Lean yes — commit spikes are one-off; sustained chat means the topic is alive.",
+  "createdAt" : "2026-11-15T16:24:26.841230400Z"
+}, {
+  "id" : "m-f63e46b8",
+  "threadId" : "t-001",
+  "author" : "You",
+  "body" : "Noted — looping in pricing to draft usage-based options.",
+  "createdAt" : "2026-11-17T16:25:41.291351500Z"
+} ]

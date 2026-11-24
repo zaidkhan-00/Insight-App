@@ -1,0 +1,63 @@
+[ {
+  "type" : "CHAT",
+  "id" : "t-001",
+  "title" : "Pricing page feedback flood",
+  "source" : "#customer-feedback",
+  "summary" : "19 replies about the new tiers; two enterprise customers want usage-based billing.",
+  "urgency" : "HIGH",
+  "updatedAt" : "2026-11-17T14:18:28.235250400Z",
+  "messageCount" : 20,
+  "signalWeight" : 3.5
+}, {
+  "type" : "CHAT",
+  "id" : "t-002",
+  "title" : "Onboarding call notes — Northwind",
+  "source" : "meetings",
+  "summary" : "They want SSO before rollout; champion is enthusiastic.",
+  "urgency" : "MEDIUM",
+  "updatedAt" : "2026-11-17T10:18:28.235250400Z",
+  "messageCount" : 7,
+  "signalWeight" : 1.35
+}, {
+  "type" : "COMMIT",
+  "id" : "t-003",
+  "title" : "feat: realtime signal refresh",
+  "source" : "github.com/insight/core",
+  "summary" : "Replaced polling with a websocket stream for the dashboard.",
+  "urgency" : "HIGH",
+  "updatedAt" : "2026-11-17T15:18:28.235250400Z",
+  "filesChanged" : 14,
+  "additions" : 412,
+  "signalWeight" : 9.923447592961033
+}, {
+  "type" : "COMMIT",
+  "id" : "t-004",
+  "title" : "fix: digest double-counts muted threads",
+  "source" : "github.com/insight/core",
+  "summary" : "Muted threads no longer inflate the signal score.",
+  "urgency" : "MEDIUM",
+  "updatedAt" : "2026-11-17T07:18:28.235250400Z",
+  "filesChanged" : 3,
+  "additions" : 46,
+  "signalWeight" : 5.150147601710058
+}, {
+  "type" : "DOC",
+  "id" : "t-005",
+  "title" : "Q3 launch brief v4",
+  "source" : "notion",
+  "summary" : "Launch window confirmed; remaining unknowns are pricing and packaging.",
+  "urgency" : "CRITICAL",
+  "updatedAt" : "2026-11-17T15:48:28.235250400Z",
+  "sectionCount" : 12,
+  "signalWeight" : 4.24
+}, {
+  "type" : "DOC",
+  "id" : "t-006",
+  "title" : "Signal scoring RFC",
+  "source" : "notion",
+  "summary" : "Open question: should commit bursts decay faster than chat volume?",
+  "urgency" : "LOW",
+  "updatedAt" : "2026-11-14T16:18:28.235250400Z",
+  "sectionCount" : 6,
+  "signalWeight" : 0.12
+} ]
